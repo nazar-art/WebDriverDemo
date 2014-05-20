@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="My test suite">
+	<test name="testing">
+		<groups>
+			<run>
+				<include name="GMAIL_PAGE" />
+			</run>
+		</groups>
+		<classes>
+			<class name="task1.GmailPageTest" />
+		</classes>
+	</test>
+</suite>

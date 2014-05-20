@@ -1,0 +1,10 @@
+2014-05-20 19:28:41 ERROR GmailPageTest:70 - org.openqa.selenium.InvalidSelectorException: The given selector :8y is either invalid or does not result in a WebElement. The following error occurred:
+InvalidSelectorError: Unable to locate an element with the xpath expression :8y because of the following error:
+[Exception... "The expression is not a legal expression."  code: "12" nsresult: "0x805b0033 (SyntaxError)"  location: "<unknown>"]
+Command duration or timeout: 14 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/invalid_selector_exception.html
+Build info: version: '2.41.0', revision: '3192d8a6c4449dc285928ba024779344f5423c58', time: '2014-03-27 11:29:39'
+System info: host: 'EPUALVIW0662', ip: '10.25.11.30', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_05'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{applicationCacheEnabled=true, rotatable=false, handlesAlerts=true, databaseEnabled=true, version=29.0.1, platform=XP, browserConnectionEnabled=true, nativeEvents=false, acceptSslCerts=true, webStorageEnabled=true, locationContextEnabled=true, browserName=firefox, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 83e7d823-2fc4-4195-90ac-e6120de24917
