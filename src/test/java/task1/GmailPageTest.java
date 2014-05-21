@@ -27,7 +27,7 @@ public class GmailPageTest {
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
 
-    @BeforeClass
+    @BeforeTest
     public void setUp() {
 //        try {
             driver.get(GmailLoginPage.LOGIN_URL);
@@ -66,7 +66,7 @@ public class GmailPageTest {
         }*/
     }
 
-    @AfterClass
+    @AfterTest
     public void tearDown() {
 //        try {
             page.clickProfileImage();

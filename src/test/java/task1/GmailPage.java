@@ -16,8 +16,8 @@ import java.util.List;
 public class GmailPage {
     private static Logger log = Logger.getLogger(GmailPage.class);
     private WebDriver driver;
-    public static final String COMPOSE_BTN_XPATH = "//*[@class='T-I J-J5-Ji T-I-KE L3']";
 
+    public static final String COMPOSE_BTN_XPATH = "//*[@class='T-I J-J5-Ji T-I-KE L3']";
     public static final String SIGN_OUT_CSS = "#gb_71";
     public static final String MESSAGE_FRAME_XPATH = "//div[@class = 'Am Al editable']/iframe";
     public static final String SAVE_CLOSE_MESSAGE_XPATH = "//*[@aria-label='Save & Close']";
@@ -48,17 +48,14 @@ public class GmailPage {
     }
 
     public void sendTextToMessageFrame(String msg) {
-        try {
-            Thread.sleep(1000);
+            (new WebDriverWait(driver, 10)).until(ExpectedConditions.
+                    elementToBeClickable(By.xpath(MESSAGE_FRAME_XPATH)));
             driver.switchTo().frame(driver.findElement(By.xpath(MESSAGE_FRAME_XPATH)));
+
             WebElement element = driver.switchTo().activeElement();
             element.sendKeys(msg);
             driver.switchTo().defaultContent();
-            Thread.sleep(1000);
             driver.findElement(By.xpath(SAVE_CLOSE_MESSAGE_XPATH)).click();
-        } catch (InterruptedException e) {
-            log.error(e);
-        }
     }
 
     public void clickAllMailLink() {
