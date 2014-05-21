@@ -1,1 +1,8 @@
 *.class
+out/*
+*target/*
+WebDriverDemo.iml
+*log/
+.idea/*
+.*
+!/.gitignore

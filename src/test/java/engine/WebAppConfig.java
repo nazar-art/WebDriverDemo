@@ -15,6 +15,8 @@ public class WebAppConfig {
 
     private void initConfig() {
         String fPath = "../resources/webAutomationConfig.xml";
+
+
     }
 
     public String getBaseUrl() {
