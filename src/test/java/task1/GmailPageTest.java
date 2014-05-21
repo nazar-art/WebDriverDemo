@@ -29,22 +29,22 @@ public class GmailPageTest {
 
     @BeforeClass
     public void setUp() {
-        try {
+//        try {
             driver.get(GmailLoginPage.LOGIN_URL);
             GmailLoginPage loginPage = new GmailLoginPage(driver);
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             log.error(e);
-        }
+        }*/
     }
 
     @Test(groups = "GMAIL_PAGE")
     public void testAllMailLink() {
-        try {
+//        try {
             (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
-                    return d.findElement(By.xpath(".//*[@id=':4e']/div/div")).isEnabled();
+                    return d.findElement(By.xpath("//*[@id=':4e']/div/div")).isEnabled();
                 }
             });
             page.pressComposeButton();
@@ -57,16 +57,18 @@ public class GmailPageTest {
             page.clickDraftLink();
             List<WebElement> draftMessages = page.takeDraftMessage();
 
-            Assert.assertTrue(allMessages.containsAll(inboxMessages) && allMessages.containsAll(draftMessages),
-                    "All messages doesn't contains all inbox or draft messages");
-        } catch (Exception e) {
+            Assert.assertTrue(allMessages.containsAll(inboxMessages),
+                    "All messages doesn't contains all inbox messages");
+            Assert.assertTrue(allMessages.containsAll(draftMessages),
+                    "All messages doesn't contains all draft messages");
+        /*} catch (Exception e) {
             log.error(e);
-        }
+        }*/
     }
 
     @AfterClass
     public void tearDown() {
-        try {
+//        try {
             page.clickProfileImage();
             page.clickSignOut();
 
@@ -76,11 +78,11 @@ public class GmailPageTest {
                     return d.getTitle().toLowerCase().startsWith("gmail");
                 }
             });
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             log.error(e);
-        } finally {
+        } finally {*/
             driver.close();
             driver.quit();
-        }
+//        }
     }
 }
