@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Nazar Lelyak.
@@ -16,11 +15,13 @@ public class GmailPage {
     private static Logger log = Logger.getLogger(GmailPage.class);
     private WebDriver driver;
 
+    public static final String XPATH_ALL_LETTERS_FROM_PAGE = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]";
+
+    public static final String LOGIN_URL = "https://www.gmail.com/";
+
     public GmailPage(WebDriver driver) {
         this.driver = driver;
     }
-
-    public static final String LOGIN_URL = "https://www.gmail.com/";
 
     public void clickProfileImage() {
         driver.findElement(By.cssSelector(".gb_X")).click();
@@ -28,7 +29,7 @@ public class GmailPage {
 
     public void clickSignOut() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.cssSelector("#gb_71")).click();
         } catch (InterruptedException e) {
             log.error(e);
@@ -73,14 +74,14 @@ public class GmailPage {
     }
 
     public List<WebElement> takeAllMessage() {
-        return driver.findElements(By.xpath("//*[@id=':2r']"));
+        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
     }
 
     public List<WebElement> takeInboxMessage() {
-        return driver.findElements(By.xpath(":8y"));
+        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
     }
 
     public List<WebElement> takeDraftMessage() {
-        return driver.findElements(By.xpath(":am"));
+        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
     }
 }

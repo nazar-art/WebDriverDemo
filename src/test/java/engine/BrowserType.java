@@ -1,4 +1,4 @@
-package task1.utils;
+package engine;
 
 public enum BrowserType {
     IE,

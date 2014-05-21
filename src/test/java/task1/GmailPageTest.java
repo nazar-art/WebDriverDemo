@@ -8,9 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.apache.log4j.Logger;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,9 +18,6 @@ import java.util.concurrent.TimeUnit;
  * @version 1.00 2014-05-20.
  */
 
-/*
-  7. Verify that "All mail" folder contains messages from "inbox" and "draft" folders
-*/
 public class GmailPageTest {
 
     private static Logger log = Logger.getLogger(GmailPageTest.class);
@@ -32,7 +27,7 @@ public class GmailPageTest {
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
 
-    @BeforeTest
+    @BeforeClass
     public void setUp() {
         try {
             driver.get(GmailLoginPage.LOGIN_URL);
@@ -69,7 +64,7 @@ public class GmailPageTest {
         }
     }
 
-    @AfterTest
+    @AfterClass
     public void tearDown() {
         try {
             page.clickProfileImage();
@@ -81,11 +76,11 @@ public class GmailPageTest {
                     return d.getTitle().toLowerCase().startsWith("gmail");
                 }
             });
-
-            driver.close();
-            driver.quit();
         } catch (Exception e) {
             log.error(e);
+        } finally {
+            driver.close();
+            driver.quit();
         }
     }
 }
