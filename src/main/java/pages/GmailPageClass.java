@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,57 +25,85 @@ public class GmailPageClass {
     public static final String SAVE_CLOSE_MESSAGE_XPATH = "//*[@aria-label='Save & Close']";
     public static final String MAIL_INBOX_LINK_XPATH = "//*[@href='https://mail.google.com/mail/#inbox']";
     public static final String MAIL_DRAFTS_LINK_XPATH = "//*[@href='https://mail.google.com/mail/#drafts']";
-    public static final String MORE_OPTIONS_LINK_CSS = ".ait";
+    public static final String MORE_OPTIONS_LINK_CSS = "//*[@class='ait']";
     public static final String ALL_MAIL_XPATH = "//*[@title='All Mail']";
     public static final String XPATH_ALL_LETTERS_FROM_PAGE = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]";
     public static final String PROFILE_OPTIONS_DROPDOWN_MENU = ".gb_0";
     public static final String LOGIN_URL = "https://www.gmail.com/";
 
+    @FindBy(xpath = COMPOSE_BTN_XPATH)
+    private WebElement composeBtn;
+
+    @FindBy(css = SIGN_OUT_CSS)
+    private WebElement signOutLink;
+
+    @FindBy(xpath = MESSAGE_FRAME_XPATH)
+    private WebElement frameMessageEditor;
+
+    @FindBy(xpath = SAVE_CLOSE_MESSAGE_XPATH)
+    private WebElement frameSaveAndCloseBtn;
+
+    @FindBy(xpath = MAIL_INBOX_LINK_XPATH)
+    private WebElement inboxMessagesLink;
+
+    @FindBy(xpath = MAIL_DRAFTS_LINK_XPATH)
+    private WebElement draftMessagesLink;
+
+    @FindBy(xpath = MORE_OPTIONS_LINK_CSS)
+    private WebElement moreOptionsLink;
+
+    @FindBy(xpath = ALL_MAIL_XPATH)
+    private WebElement allMailLink;
+
+    @FindBy(css = PROFILE_OPTIONS_DROPDOWN_MENU)
+    private WebElement userOptionsDropDownMenu;
+
     public GmailPageClass(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
     public void clickProfileImage() {
-        driver.findElement(By.cssSelector(PROFILE_OPTIONS_DROPDOWN_MENU)).click();
+        userOptionsDropDownMenu.click();
     }
 
     public void clickSignOut() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                elementToBeClickable(By.cssSelector(SIGN_OUT_CSS)));
-            driver.findElement(By.cssSelector(SIGN_OUT_CSS)).click();
+                elementToBeClickable(signOutLink));
+        signOutLink.click();
     }
 
     public void pressComposeButton() {
-        driver.findElement(By.xpath(COMPOSE_BTN_XPATH)).click();
+        composeBtn.click();
     }
 
     public void sendTextToMessageFrame(String msg) {
-            (new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                    elementToBeClickable(By.xpath(MESSAGE_FRAME_XPATH)));
-            driver.switchTo().frame(driver.findElement(By.xpath(MESSAGE_FRAME_XPATH)));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.
+                elementToBeClickable(frameMessageEditor));
+        driver.switchTo().frame(frameMessageEditor);
 
-            WebElement element = driver.switchTo().activeElement();
-            element.sendKeys(msg);
-            driver.switchTo().defaultContent();
-            driver.findElement(By.xpath(SAVE_CLOSE_MESSAGE_XPATH)).click();
+        WebElement element = driver.switchTo().activeElement();
+        element.sendKeys(msg);
+        driver.switchTo().defaultContent();
+        frameSaveAndCloseBtn.click();
     }
 
     public void clickAllMailLink() {
-            (new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                    elementToBeClickable(By.cssSelector(MORE_OPTIONS_LINK_CSS)));
-            driver.findElement(By.cssSelector(MORE_OPTIONS_LINK_CSS)).click();
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.
+                elementToBeClickable(moreOptionsLink));
+        moreOptionsLink.click();
 
-            (new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                    elementToBeClickable(By.xpath(ALL_MAIL_XPATH)));
-            driver.findElement(By.xpath(ALL_MAIL_XPATH)).click();
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.
+                elementToBeClickable(allMailLink));
+        allMailLink.click();
     }
 
     public void clickInboxLink() {
-        driver.findElement(By.xpath(MAIL_INBOX_LINK_XPATH)).click();
+        inboxMessagesLink.click();
     }
 
     public void clickDraftLink() {
-        driver.findElement(By.xpath(MAIL_DRAFTS_LINK_XPATH)).click();
+        draftMessagesLink.click();
     }
 
     public List<WebElement> takeAllMessage() {
