@@ -9,20 +9,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.apache.log4j.Logger;
 import org.testng.annotations.*;
+import pages.GmailLoginPageClass;
+import pages.GmailPageClass;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
 
-public class GmailPageTest {
+public class GmailPageClassTest {
 
-    private static Logger log = Logger.getLogger(GmailPageTest.class);
+    private static Logger log = Logger.getLogger(GmailPageClassTest.class);
     private WebDriver driver = new FirefoxDriver();
-    private GmailPage page = null;
+    private GmailPageClass page = null;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
@@ -30,8 +31,8 @@ public class GmailPageTest {
     @BeforeTest
     public void setUp() {
 //        try {
-            driver.get(GmailLoginPage.LOGIN_URL);
-            GmailLoginPage loginPage = new GmailLoginPage(driver);
+            driver.get(GmailLoginPageClass.LOGIN_URL);
+            GmailLoginPageClass loginPage = new GmailLoginPageClass(driver);
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
         /*} catch (Exception e) {
             log.error(e);
@@ -61,6 +62,7 @@ public class GmailPageTest {
                     "All messages doesn't contains all inbox messages");
             Assert.assertTrue(allMessages.containsAll(draftMessages),
                     "All messages doesn't contains all draft messages");
+            log.info("test is passed");
         /*} catch (Exception e) {
             log.error(e);
         }*/

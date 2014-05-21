@@ -1,4 +1,4 @@
-package task1;
+package pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,8 +13,8 @@ import java.util.List;
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailPage {
-    private static Logger log = Logger.getLogger(GmailPage.class);
+public class GmailPageClass {
+    private static Logger log = Logger.getLogger(GmailPageClass.class);
     private WebDriver driver;
 
     public static final String COMPOSE_BTN_XPATH = "//*[@class='T-I J-J5-Ji T-I-KE L3']";
@@ -29,7 +29,7 @@ public class GmailPage {
     public static final String PROFILE_OPTIONS_DROPDOWN_MENU = ".gb_0";
     public static final String LOGIN_URL = "https://www.gmail.com/";
 
-    public GmailPage(WebDriver driver) {
+    public GmailPageClass(WebDriver driver) {
         this.driver = driver;
     }
 

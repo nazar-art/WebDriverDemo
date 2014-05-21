@@ -1,4 +1,4 @@
-package task1;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,11 +9,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailLoginPage {
+public class GmailLoginPageClass {
     private final WebDriver driver;
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
 
-    public GmailLoginPage(WebDriver driver) {
+    public GmailLoginPageClass(WebDriver driver) {
         this.driver = driver;
 
         // Check that we're on the right page.
@@ -21,7 +21,7 @@ public class GmailLoginPage {
             throw new IllegalStateException("This is not the login page");
         }
     }
-    public GmailPage loginAs(String username, String userpassword) {
+    public GmailPageClass loginAs(String username, String userpassword) {
         driver.findElement(By.id("Email")).sendKeys(username);
         driver.findElement(By.id("Passwd")).sendKeys(userpassword);
         driver.findElement(By.id("signIn")).submit();
@@ -33,6 +33,6 @@ public class GmailLoginPage {
             }
         });
         // Return a new page object representing the destination.
-        return new GmailPage(driver);
+        return new GmailPageClass(driver);
     }
 }
