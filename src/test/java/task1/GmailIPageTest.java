@@ -1,19 +1,23 @@
 package task1;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.apache.log4j.Logger;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import pages.GmailLoginIPage;
 import pages.GmailPage;
 import pages.TestUtils;
+import seleniumEngine.SeleniumManager;
 
 import java.util.List;
+
+import static seleniumEngine.BrowserType.Firefox;
 
 /**
  * @author Nazar Lelyak.
@@ -23,7 +27,7 @@ import java.util.List;
 public class GmailIPageTest {
 
     private static Logger log = Logger.getLogger(GmailIPageTest.class);
-    private WebDriver driver = new FirefoxDriver();
+    private WebDriver driver = SeleniumManager.start(Firefox);
     private GmailPage page = null;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
@@ -93,10 +97,10 @@ public class GmailIPageTest {
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
         for (WebElement element : webElementList) {
             String fullLetterText = element.getText().trim();
-            System.out.printf("full: %s%n", fullLetterText);
+//            System.out.printf("full: %s%n", fullLetterText);
             if (fullLetterText.startsWith("-")) {
                 String letterText = fullLetterText.substring(2);
-                System.out.printf("short: %s%n", letterText);
+//                System.out.printf("short: %s%n", letterText);
                 if (letterText.equals(message)) {
                     return true;
                 }

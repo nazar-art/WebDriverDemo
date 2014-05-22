@@ -28,21 +28,18 @@ public class SeleniumManager {
     }
 
 
-    public static void start(BrowserType browserType) {
+    public static WebDriver start(BrowserType browserType) {
         switch (browserType) {
             case Firefox: {
-                driver = new FirefoxDriver();
-                break;
+                return driver = new FirefoxDriver();
             }
 
             case Chrome: {
-                driver = new ChromeDriver();
-                break;
+                return driver = new ChromeDriver();
             }
 
             case IE: {
-                driver = new InternetExplorerDriver();
-                break;
+                return driver = new InternetExplorerDriver();
             }
             default: {
                 throw new RuntimeException("Not supported");
