@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailLoginPageClass {
+public class GmailLoginPage {
     private final WebDriver driver;
 
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
@@ -26,16 +25,16 @@ public class GmailLoginPageClass {
     @FindBy(id = "signIn")
     private WebElement submitBtn;
 
-    public GmailLoginPageClass(WebDriver driver) {
+    public GmailLoginPage(WebDriver driver) {
         this.driver = driver;
 
         // Check that we're on the right page.
-        if (!"Gmail".equals(driver.getTitle())) {
+        if (!"gmail".equals(driver.getTitle().toLowerCase())) {
             throw new IllegalStateException("This is not the login page");
         }
         PageFactory.initElements(driver, this);
     }
-    public GmailPageClass loginAs(String username, String userpassword) {
+    public GmailPage loginAs(String username, String userpassword) {
         loginField.sendKeys(username);
         passwordField.sendKeys(userpassword);
         submitBtn.click();
@@ -47,6 +46,6 @@ public class GmailLoginPageClass {
             }
         });
         // Return a new page object representing the destination.
-        return new GmailPageClass(driver);
+        return new GmailPage(driver);
     }
 }

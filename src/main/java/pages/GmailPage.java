@@ -15,8 +15,8 @@ import java.util.List;
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailPageClass {
-    private static Logger log = Logger.getLogger(GmailPageClass.class);
+public class GmailPage {
+    private static Logger log = Logger.getLogger(GmailPage.class);
     private WebDriver driver;
 
     public static final String COMPOSE_BTN_XPATH = "//*[@class='T-I J-J5-Ji T-I-KE L3']";
@@ -58,7 +58,7 @@ public class GmailPageClass {
     @FindBy(css = PROFILE_OPTIONS_DROPDOWN_MENU)
     private WebElement userOptionsDropDownMenu;
 
-    public GmailPageClass(WebDriver driver) {
+    public GmailPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -107,7 +107,15 @@ public class GmailPageClass {
     }
 
     public List<WebElement> takeAllMessage() {
-        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
+        List<WebElement> elements = null;
+        try {
+            Thread.sleep(1000);
+            elements =
+                    driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
+        } catch (InterruptedException e) {
+            log.error(e);
+        }
+        return elements;
     }
 
     public List<WebElement> takeInboxMessage() {
