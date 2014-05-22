@@ -1,4 +1,4 @@
-package engine;
+package seleniumEngine;
 
 public enum BrowserType {
     IE,

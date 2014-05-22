@@ -1,4 +1,4 @@
-package engine;
+package seleniumEngine;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

@@ -9,7 +9,7 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="task1.GmailPageTest" />
+			<class name="task1.GmailIPageTest" />
 		</classes>
 	</test>
 </suite>

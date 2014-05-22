@@ -6,12 +6,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.interfaces.IPage;
 
 /**
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailLoginPage {
+public class GmailLoginIPage implements IPage {
+
     private final WebDriver driver;
 
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
@@ -25,7 +27,7 @@ public class GmailLoginPage {
     @FindBy(id = "signIn")
     private WebElement submitBtn;
 
-    public GmailLoginPage(WebDriver driver) {
+    public GmailLoginIPage(WebDriver driver) {
         this.driver = driver;
 
         // Check that we're on the right page.
@@ -47,5 +49,10 @@ public class GmailLoginPage {
         });
         // Return a new page object representing the destination.
         return new GmailPage(driver);
+    }
+
+    @Override
+    public void init(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 }

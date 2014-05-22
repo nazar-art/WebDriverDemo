@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.apache.log4j.Logger;
 import org.testng.annotations.*;
-import pages.GmailLoginPage;
+import pages.GmailLoginIPage;
 import pages.GmailPage;
 import pages.TestUtils;
 
@@ -20,9 +20,9 @@ import java.util.List;
  * @version 1.00 2014-05-20.
  */
 
-public class GmailPageTest {
+public class GmailIPageTest {
 
-    private static Logger log = Logger.getLogger(GmailPageTest.class);
+    private static Logger log = Logger.getLogger(GmailIPageTest.class);
     private WebDriver driver = new FirefoxDriver();
     private GmailPage page = null;
 
@@ -33,8 +33,8 @@ public class GmailPageTest {
     @BeforeTest
     public void setUp() {
         try {
-            driver.get(GmailLoginPage.LOGIN_URL);
-            GmailLoginPage loginPage = new GmailLoginPage(driver);
+            driver.get(GmailLoginIPage.LOGIN_URL);
+            GmailLoginIPage loginPage = new GmailLoginIPage(driver);
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
         } catch (Exception e) {
             log.error("GmailPageClassTest - setUp() fail", e);
