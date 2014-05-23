@@ -12,7 +12,7 @@ import pages.interfaces.IPage;
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
-public class GmailLoginIPage implements IPage {
+public class GmailLoginPage implements IPage {
 
     private final WebDriver driver;
 
@@ -27,7 +27,7 @@ public class GmailLoginIPage implements IPage {
     @FindBy(id = "signIn")
     private WebElement submitBtn;
 
-    public GmailLoginIPage(WebDriver driver) {
+    public GmailLoginPage(WebDriver driver) {
         this.driver = driver;
 
         // Check that we're on the right page.

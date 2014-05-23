@@ -1,10 +1,11 @@
-package seleniumEngine;
+package framework.seleniumEngine;
 
 /**
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-21.
  */
 public class UIMapping {
+
     private SearchLevelType searchLevelType;
     private SearchType searchType;
     private String locator;

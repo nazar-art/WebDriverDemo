@@ -1,4 +1,4 @@
-package seleniumEngine;
+package framework.seleniumEngine;
 
 /**
  * @author Nazar Lelyak.

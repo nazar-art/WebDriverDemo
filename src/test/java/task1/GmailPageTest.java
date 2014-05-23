@@ -10,35 +10,34 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pages.GmailLoginIPage;
+import pages.GmailLoginPage;
 import pages.GmailPage;
 import pages.TestUtils;
-import seleniumEngine.SeleniumManager;
+import framework.seleniumEngine.SeleniumManager;
 
 import java.util.List;
 
-import static seleniumEngine.BrowserType.Firefox;
+import static framework.seleniumEngine.BrowserType.Firefox;
 
 /**
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-20.
  */
+public class GmailPageTest {
 
-public class GmailIPageTest {
-
-    private static Logger log = Logger.getLogger(GmailIPageTest.class);
+    private static Logger log = Logger.getLogger(GmailPageTest.class);
     private WebDriver driver = SeleniumManager.start(Firefox);
     private GmailPage page = null;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
-//    public static final String TEST_MESSAGE = "This is the test message";
 
     @BeforeTest
     public void setUp() {
         try {
-            driver.get(GmailLoginIPage.LOGIN_URL);
-            GmailLoginIPage loginPage = new GmailLoginIPage(driver);
+            driver.get(GmailLoginPage.LOGIN_URL);
+//            driver.get(GmailPage.LOGIN_URL);
+            GmailLoginPage loginPage = new GmailLoginPage(driver);
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
         } catch (Exception e) {
             log.error("GmailPageClassTest - setUp() fail", e);
@@ -47,7 +46,7 @@ public class GmailIPageTest {
     }
 
     @Test(groups = "GMAIL_PAGE")
-    public void testAllMailLink() {
+    public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
             (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                 @Override
@@ -57,13 +56,14 @@ public class GmailIPageTest {
             });
             page.pressComposeButton();
             page.sendTextToMessageFrame(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
-            page.clickAllMailLink();
+//            page.clickAllMailLink();
+            page.clickDraftLink();
             List<WebElement> allMessages = page.takeAllMessage();
             Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
                     "any letter doesn't contain test message");
         } catch (Exception e) {
-            log.error("GmailPageClassTest - testAllMailLink() fail", e);
-            Assert.fail("GmailPageClassTest - testAllMailLink() fail", e);
+            log.error("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
+            Assert.fail("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
         }
     }
 

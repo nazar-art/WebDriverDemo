@@ -1,4 +1,4 @@
-package seleniumEngine;
+package framework.seleniumEngine;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

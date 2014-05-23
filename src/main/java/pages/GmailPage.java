@@ -19,16 +19,15 @@ public class GmailPage {
     private static Logger log = Logger.getLogger(GmailPage.class);
     private WebDriver driver;
 
-    public static final String COMPOSE_BTN_XPATH = "//*[@class='T-I J-J5-Ji T-I-KE L3']";
-    public static final String SIGN_OUT_CSS = "#gb_71";
+    public static final String COMPOSE_BTN_XPATH = "//div[@class='T-I J-J5-Ji T-I-KE L3']";
     public static final String MESSAGE_FRAME_XPATH = "//div[@class = 'Am Al editable']/iframe";
-    public static final String SAVE_CLOSE_MESSAGE_XPATH = "//*[@aria-label='Save & Close']";
-    public static final String MAIL_INBOX_LINK_XPATH = "//*[@href='https://mail.google.com/mail/#inbox']";
-    public static final String MAIL_DRAFTS_LINK_XPATH = "//*[@href='https://mail.google.com/mail/#drafts']";
+    public static final String SAVE_CLOSE_MESSAGE_XPATH = "//img[@aria-label='Save & Close']";
+    public static final String MAIL_INBOX_LINK_XPATH = "//*[starts-with(@title, 'Inbox')]";
+    public static final String MAIL_DRAFTS_LINK_XPATH = "//a[starts-with(@title, 'Drafts')]";
     public static final String MORE_OPTIONS_LINK_CSS = "//*[@class='ait']";
     public static final String ALL_MAIL_XPATH = "//*[@title='All Mail']";
-    public static final String XPATH_ALL_LETTERS_FROM_PAGE = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]";
     public static final String PROFILE_OPTIONS_DROPDOWN_MENU = ".gb_0";
+    public static final String SIGN_OUT_CSS = "#gb_71";
     public static final String LOGIN_URL = "https://www.gmail.com/";
 
     @FindBy(xpath = COMPOSE_BTN_XPATH)
@@ -111,7 +110,7 @@ public class GmailPage {
         try {
             Thread.sleep(1000);
             elements =
-                    driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
+                    driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
         } catch (InterruptedException e) {
             log.error(e);
         }
@@ -119,10 +118,10 @@ public class GmailPage {
     }
 
     public List<WebElement> takeInboxMessage() {
-        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
+        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
     }
 
     public List<WebElement> takeDraftMessage() {
-        return driver.findElements(By.xpath(XPATH_ALL_LETTERS_FROM_PAGE));
+        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
     }
 }
