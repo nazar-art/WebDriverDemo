@@ -1,5 +1,8 @@
 package sandbox;
 
+import framework.UIElements.UIButton;
+import framework.UIElements.UIControlBuilder;
+import framework.UIElements.UIFrame;
 import framework.seleniumEngine.BrowserType;
 import framework.seleniumEngine.PageManager;
 import framework.seleniumEngine.SeleniumManager;
@@ -12,28 +15,27 @@ import org.testng.annotations.Test;
  * @version 1.00 2014-05-23.
  */
 public class LoginTest {
+
+
     @BeforeClass
     public void setUp() {
-        // code that will be invoked when this test is instantiated
         System.out.println("BeforeClass setUp invoked");
+        SeleniumManager.start(BrowserType.Firefox);
+        PageManager pageManager = new PageManager();
+
+        pageManager.navigateTo(UIRepository.Pages.GmailLoginPage.self);
     }
 
     @Test
     public void LoginTestByRepository() {
-/*
-        SeleniumManager.start(BrowserType.Firefox);
-        PageManager pageManager = new PageManager();
+        UIButton btnLogin = (UIButton) UIControlBuilder.buildControl(UIRepository.Pages.GmailLoginPage.btnSignIn);
+        btnLogin.click();
 
-        pageManager.navigateTo(UIRepository.Pages.LoginPage.self);
-
-        //LoginPage loginPage = (LoginPage) UIControlBuilder.buildPage(UIRepository.Pages.PageLogin.self);
-        //UIRepository.Pages.PageLogin.
-
-        UI_InputButton btnLogin = (UI_InputButton) UIControlBuilder.buildControl(UIRepository.Pages.PageLogin.BtnLogin);
-        btnLogin.Click();
-
-        UI_InputButton btnSubmitSelected = (UI_InputButton) UIControlBuilder.buildControl(UIRepository.Pages.PageIndex.BtnSubmitSelected);
-        btnSubmitSelected.IsNotEnabled();
-*/
+        /*UIButton btnCompose = (UIButton) UIControlBuilder.buildControl(UIRepository.GmailMainPage.btnCompose);
+        btnCompose.click();
+        UIFrame frame = (UIFrame) UIControlBuilder.buildControl(UIRepository.)
+        UIButton btnSaveAndClose = (UIButton) UIControlBuilder.buildControl(UIRepository.GmailMainPage.btnSaveAndClose);
+        btnSaveAndClose.click();*/
+//        todo finish test logic
     }
 }

@@ -40,7 +40,5 @@ public static UIMapping passwordField = new UIMapping(SearchLevelType.Page, Sear
 
         public static UIMapping btnSignOut = new UIMapping(SearchLevelType.Page, SearchType.ByCss, "#gb_71", UIButton.class);
 
-
-
     }
 }
