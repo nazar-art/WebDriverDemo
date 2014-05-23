@@ -2,7 +2,6 @@ package sandbox;
 
 import framework.UIElements.UIButton;
 import framework.UIElements.UIControlBuilder;
-import framework.UIElements.UIFrame;
 import framework.seleniumEngine.BrowserType;
 import framework.seleniumEngine.PageManager;
 import framework.seleniumEngine.SeleniumManager;
