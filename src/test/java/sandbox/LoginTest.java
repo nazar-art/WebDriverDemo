@@ -2,11 +2,11 @@ package sandbox;
 
 import framework.UIElements.UIButton;
 import framework.UIElements.UIControlBuilder;
-import framework.UIElements.UIFrame;
 import framework.seleniumEngine.BrowserType;
 import framework.seleniumEngine.PageManager;
 import framework.seleniumEngine.SeleniumManager;
 import framework.seleniumEngine.UIRepository;
+import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,10 +16,12 @@ import org.testng.annotations.Test;
  */
 public class LoginTest {
 
+    private static Logger log = Logger.getLogger(LoginTest.class);
 
     @BeforeClass
     public void setUp() {
-        System.out.println("BeforeClass setUp invoked");
+//        System.out.println("BeforeClass setUp invoked");
+        log.info("BeforeClass setUp invoked");
         SeleniumManager.start(BrowserType.Firefox);
         PageManager pageManager = new PageManager();
 

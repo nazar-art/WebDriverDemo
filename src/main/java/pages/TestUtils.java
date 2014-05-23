@@ -1,5 +1,10 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Nazar Lelyak.
  * @version 1.00 2014-05-22.
