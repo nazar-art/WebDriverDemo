@@ -1,4 +1,4 @@
-package task1;
+package task2;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -11,9 +11,11 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.GmailPage;
 import pages.TestUtils;
-import framework.seleniumEngine.SeleniumManager;
+import task2.business.GmailHeaderPanelBO;
+import task2.business.GmailLeftPanelBO;
+import task2.business.GmailMainContentBO;
+import task2.business.LoginBO;
 
 import java.util.List;
 
@@ -21,70 +23,79 @@ import static framework.seleniumEngine.BrowserType.Firefox;
 
 /**
  * @author Nazar Lelyak.
- * @version 1.00 2014-05-20.
+ * @version 1.00 2014-05-23.
  */
-public class GmailPageTest {
+public class GmailPageTestWithBO {
 
-    private static Logger log = Logger.getLogger(GmailPageTest.class);
-    private WebDriver driver = SeleniumManager.start(Firefox);
-    private GmailPage page = null;
+    private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
+
+    private WebDriver driver = null;
+    private GmailLeftPanelBO leftPanelBO;
+    private GmailMainContentBO mainContentBO;
+    private GmailHeaderPanelBO headerPanelBO;
+    private LoginBO loginBO;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
+
+    public GmailPageTestWithBO() {
+        driver = WebDriverManager.getInstance(Firefox); // todo move to properties file
+        leftPanelBO = new GmailLeftPanelBO(driver);
+        mainContentBO = new GmailMainContentBO(driver);
+        headerPanelBO = new GmailHeaderPanelBO(driver);
+        loginBO = new LoginBO(driver);
+    }
 
     @BeforeTest
     public void setUp() {
         try {
             driver.get(GmailLoginPage.LOGIN_URL);
-//            driver.get(GmailPage.LOGIN_URL);
-            GmailLoginPage loginPage = new GmailLoginPage(driver);
-            page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
+            loginBO.login(USER_LOGIN, USER_PASSWORD);
         } catch (Exception e) {
-            log.error("GmailPageClassTest - setUp() fail", e);
-            Assert.fail("GmailPageClassTest - setUp() fail", e.getCause());
+            log.error("GmailPageTestWithBO - setUp() fail - ", e);
+            Assert.fail("GmailPageTestWithBO - setUp() fail", e.getCause());
         }
     }
 
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
-            (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+            /*(new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
-                    return d.findElement(By.xpath("//*[@id=':4e']/div/div")).isEnabled();
+                    return d.findElement(By.xpath("/*//*[@id=':4e']/div/div")).isEnabled();
                 }
-            });
-            page.pressComposeButton();
-            page.sendTextToMessageFrame(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
-//            page.clickAllMailLink();
-            page.clickDraftLink();
-            List<WebElement> allMessages = page.takeAllMessage();
+            });*/
+            mainContentBO.pressComposeBtn();
+            mainContentBO.typeTextToNewMsg(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+            mainContentBO.clickSaveAndClose();
+            leftPanelBO.clickDraftLink();
+            leftPanelBO.clickDraftLink();
+            List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
             Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
                     "any letter doesn't contain test message");
         } catch (Exception e) {
-            log.error("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
-            Assert.fail("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
+            log.error("GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
+            Assert.fail("GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
         }
     }
 
     @AfterTest
     public void tearDown() {
         try {
-            page.clickProfileImage();
-            page.clickSignOut();
-
-            (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+            headerPanelBO.clickProfileOptionMenu();
+            headerPanelBO.clickSignOutBtn();
+            /*(new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
                     return d.getTitle().toLowerCase().startsWith("gmail");
                 }
-            });
+            });*/
         } catch (Exception e) {
-            log.error("GmailPageClassTest - tearDown() fail", e);
-            Assert.fail("GmailPageClassTest - tearDown() fail", e.getCause());
+            log.error("GmailPageTestWithBO - tearDown() fail - ", e);
+            Assert.fail("GmailPageTestWithBO - tearDown() fail", e.getCause());
         } finally {
-            driver.close();
-            driver.quit();
+            WebDriverManager.stop();
         }
     }
 
@@ -108,4 +119,5 @@ public class GmailPageTest {
         }
         return false;
     }
+
 }

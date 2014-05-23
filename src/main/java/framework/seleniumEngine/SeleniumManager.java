@@ -10,7 +10,7 @@ public class SeleniumManager {
 
     private static WebDriver driver = null;
 
-    private static volatile SeleniumManager instance = new SeleniumManager();
+    private static volatile SeleniumManager instance = null;
 
     // private constructor
     private SeleniumManager() {
@@ -49,5 +49,6 @@ public class SeleniumManager {
 
     public static void stop() {
         driver.quit();
+        instance = null;
     }
 }
