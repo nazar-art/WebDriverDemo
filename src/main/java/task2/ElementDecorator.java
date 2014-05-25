@@ -20,6 +20,7 @@ public class ElementDecorator extends DefaultFieldDecorator {
     @Override
     public Object decorate(ClassLoader loader, Field field) {
         Class<?> decoratableClass = decoratableClass(field);
+
         // if class of this parameter is decoratable
         if (decoratableClass != null) {
             ElementLocator locator = factory.createLocator(field);
@@ -27,11 +28,11 @@ public class ElementDecorator extends DefaultFieldDecorator {
                 return null;
             }
 
-            // element
+            // create element for custom class
             return createElement(loader, locator, decoratableClass);
         }
+
         return super.decorate(loader, field);
-//        return null;
     }
 
     /**
@@ -39,9 +40,7 @@ public class ElementDecorator extends DefaultFieldDecorator {
      * @return decorated class of parameter, null otherwise.
      */
     private Class<?> decoratableClass(Field field) {
-
         Class<?> clazz = field.getType();
-
         // field should have constructor for WebElement
         try {
             clazz.getConstructor(WebElement.class);
