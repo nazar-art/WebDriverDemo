@@ -4,10 +4,6 @@ import framework.UIElements.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-/**
- * @author nlelyak.
- * @version 1.00 2014-05-23.
- */
 public class GmailMainPage extends BaseUIPage {
 
     private UIButton btnCompose;

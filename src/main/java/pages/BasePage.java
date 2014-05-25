@@ -5,14 +5,16 @@ import task2.WebDriverManager;
 
 import java.sql.DriverManager;
 
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-23.
- */
-public class BasePage {
-    WebDriver driver = null;
-//  todo create flexible singleton
-    /*public BasePage() {
+public class BasePage implements IPage {
+
+    protected WebDriver driver = null;
+
+    public BasePage() {
         this.driver = WebDriverManager.getInstance();
-    }*/
+    }
+
+    @Override
+    public WebDriver getDriver() {
+        return driver;
+    }
 }

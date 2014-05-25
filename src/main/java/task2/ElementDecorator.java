@@ -8,10 +8,6 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 
 import java.lang.reflect.Field;
 
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-22.
- */
 public class ElementDecorator extends DefaultFieldDecorator {
 
     public ElementDecorator(SearchContext searchContext) {
@@ -19,34 +15,34 @@ public class ElementDecorator extends DefaultFieldDecorator {
     }
 
     /**
-     * Метод вызывается фабрикой для каждого поля в классе
+     * Method is called by fabric for every class parameter
      */
     @Override
     public Object decorate(ClassLoader loader, Field field) {
         Class<?> decoratableClass = decoratableClass(field);
-        // если класс поля декорируемый
+        // if class of this parameter is decoratable
         if (decoratableClass != null) {
             ElementLocator locator = factory.createLocator(field);
             if (locator == null) {
                 return null;
             }
 
-            // элемент
+            // element
             return createElement(loader, locator, decoratableClass);
-//            return super.decorate(loader, field);
         }
-        return null;
+        return super.decorate(loader, field);
+//        return null;
     }
 
     /**
-     * Возвращает декорируемый класс поля,
-     * либо null если класс не подходит для декоратора
+     * @param field Class field
+     * @return decorated class of parameter, null otherwise.
      */
     private Class<?> decoratableClass(Field field) {
 
         Class<?> clazz = field.getType();
 
-        // у элемента должен быть конструктор, принимающий WebElement
+        // field should have constructor for WebElement
         try {
             clazz.getConstructor(WebElement.class);
         } catch (Exception e) {
@@ -57,8 +53,12 @@ public class ElementDecorator extends DefaultFieldDecorator {
     }
 
     /**
-     * Создание элемента.
-     * Находит WebElement и передает его в кастомный класс
+     * Create element - find web element and pass to custom class.
+     * @param loader class loader.
+     * @param locator locator.
+     * @param clazz element of Class class for this element.
+     * @param <T> type of Class object.
+     * @return custom class element.
      */
     protected <T> T createElement(ClassLoader loader, ElementLocator locator, Class<T> clazz) {
         WebElement proxy = proxyForLocator(loader, locator);
@@ -66,8 +66,11 @@ public class ElementDecorator extends DefaultFieldDecorator {
     }
 
     /**
-     * Создает экземпляр класса,
-     * вызывая конструктор с аргументом WebElement
+     * Create field for class, calling constructor with WebElement argument.
+     * @param clazz Element of class Class.
+     * @param element parameter for constructor.
+     * @param <T> type of element.
+     * @return instance of custom class.
      */
     private <T> T createInstance(Class<T> clazz, WebElement element) {
         try {

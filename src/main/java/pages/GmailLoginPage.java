@@ -10,13 +10,7 @@ import task2.ElementDecorator;
 import task2.elements.Button;
 import task2.elements.TextField;
 
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-20.
-*/
-public class GmailLoginPage {
-
-    private final WebDriver driver;
+public class GmailLoginPage extends BasePage {
 
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
 
@@ -29,19 +23,13 @@ public class GmailLoginPage {
     @FindBy(id = "signIn")
     private Button loginBtn;
 
-    public GmailLoginPage(WebDriver driver) {
-        this.driver = driver;
-
-        // Check that we're on the right page.
-        if (!"gmail".equals(driver.getTitle().toLowerCase())) {
-            throw new IllegalStateException("This is not the login page");
-        }
+    public GmailLoginPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
-    public GmailPage loginAs(String username, String userpassword) {
-        loginField.sendKeys(username);
-        passwordField.sendKeys(userpassword);
+    public GmailPage loginAs(String userName, String userPass) {
+        loginField.sendKeys(userName);
+        passwordField.sendKeys(userPass);
         loginBtn.click();
 
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
@@ -51,14 +39,16 @@ public class GmailLoginPage {
             }
         });
 
-        return new GmailPage(driver);
+        return new GmailPage();
     }
 
     public void setLogin(String userLogin) {
+        loginField.clear();
         loginField.sendKeys(userLogin);
     }
 
     public void setPassword(String userPass) {
+        passwordField.clear();
         passwordField.sendKeys(userPass);
     }
 

@@ -12,22 +12,16 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.GmailPage;
-import pages.TestUtils;
+import pages.utils.TestUtils;
 import task2.WebDriverManager;
 
 import java.util.List;
 
-import static framework.seleniumEngine.BrowserType.Firefox;
-
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-20.
- */
 public class GmailPageTestWithPageObject {
 
     private static Logger log = Logger.getLogger(GmailPageTestWithPageObject.class);
 
-    private WebDriver driver = WebDriverManager.getInstance(Firefox); // todo move to properties file
+    private WebDriver driver = WebDriverManager.getInstance();
     private GmailPage page = null;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
@@ -35,19 +29,20 @@ public class GmailPageTestWithPageObject {
 
     @BeforeTest
     public void setUp() {
-//        try {
+        try {
             driver.get(GmailLoginPage.LOGIN_URL);
-            GmailLoginPage loginPage = new GmailLoginPage(driver);
+            driver.manage().window().maximize();
+            GmailLoginPage loginPage = new GmailLoginPage();
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             log.error("GmailPageClassTest - setUp() fail", e);
             Assert.fail("GmailPageClassTest - setUp() fail", e.getCause());
-        }*/
+        }
     }
 
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
-//        try {
+        try {
             (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
@@ -60,10 +55,10 @@ public class GmailPageTestWithPageObject {
             List<WebElement> allMessages = page.takeAllMessages();
             Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
                     "any letter doesn't contain test message");
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             log.error("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
             Assert.fail("GmailPageClassTest - testIfDraftFolderContainsSavedAndClosedDraft() fail", e);
-        }*/
+        }
     }
 
     @AfterTest
@@ -82,7 +77,7 @@ public class GmailPageTestWithPageObject {
             log.error("GmailPageClassTest - tearDown() fail", e);
             Assert.fail("GmailPageClassTest - tearDown() fail", e.getCause());
         } finally {
-            WebDriverManager.stop();
+            WebDriverManager.closeQuietly();
         }
     }
 
@@ -95,10 +90,10 @@ public class GmailPageTestWithPageObject {
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
         for (WebElement element : webElementList) {
             String fullLetterText = element.getText().trim();
-            System.out.printf("full: %s%n", fullLetterText);
+//            System.out.printf("full: %s%n", fullLetterText);
             if (fullLetterText.startsWith("-")) {
                 String letterText = fullLetterText.substring(2);
-                System.out.printf("short: %s%n", letterText);
+//                System.out.printf("short: %s%n", letterText);
                 if (letterText.equals(message)) {
                     return true;
                 }

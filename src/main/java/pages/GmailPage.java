@@ -2,26 +2,24 @@ package pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.utils.TestUtils;
 import task2.ElementDecorator;
-import task2.elements.*;
+import task2.elements.Button;
+import task2.elements.Link;
+import task2.elements.Menu;
+import task2.elements.TextField;
 
 import java.util.List;
+import static java.util.concurrent.TimeUnit.*;
 
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-20.
- */
-public class GmailPage {
+public class GmailPage extends BasePage {
 
     private static Logger log = Logger.getLogger(GmailPage.class);
-
-    private WebDriver driver;
 
     @FindBy(xpath = "//div[@class='T-I J-J5-Ji T-I-KE L3']")
     private Button composeBtn;
@@ -29,8 +27,8 @@ public class GmailPage {
     @FindBy(css = "#gb_71")
     private Link signOutLink;
 
-//    @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
-    @FindBy(xpath = "//iframe[@tabindex='1']")
+    //    @FindBy(xpath = "//iframe[@tabindex='1']")
+    @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
     private WebElement frameMessageEditor;
 
     @FindBy(xpath = "//img[@aria-label='Save & Close']")
@@ -51,8 +49,7 @@ public class GmailPage {
     @FindBy(css = ".gb_0")
     private Menu userOptionsDropDownMenu;
 
-    public GmailPage(WebDriver driver) {
-        this.driver = driver;
+    public GmailPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
@@ -71,19 +68,15 @@ public class GmailPage {
     }
 
     public void sendTextToMessageFrame(String msg) {
-//        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
-        try {
-            Thread.sleep(1000);
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
+//            TestUtils.interrupt(SECONDS, 1);
             driver.switchTo().frame(frameMessageEditor);
             WebElement element = driver.switchTo().activeElement();
-            Thread.sleep(1000);
+            TestUtils.interrupt(SECONDS, 1);
             element.sendKeys(msg);
-            Thread.sleep(1000);
+            TestUtils.interrupt(SECONDS, 1);
             driver.switchTo().defaultContent();
             frameSaveAndCloseBtn.click();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void clickAllMailLink() {
@@ -106,13 +99,8 @@ public class GmailPage {
 
     public List<WebElement> takeAllMessages() {
         List<WebElement> elements = null;
-        try {
-            Thread.sleep(1000);
-            elements =
-                    driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
-        } catch (InterruptedException e) {
-            log.error(e);
-        }
+            TestUtils.interrupt(SECONDS, 1);
+            elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
         return elements;
     }
 

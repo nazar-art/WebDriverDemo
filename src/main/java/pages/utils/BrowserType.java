@@ -1,4 +1,4 @@
-package framework.seleniumEngine;
+package pages.utils;
 
 public enum BrowserType {
     IE,

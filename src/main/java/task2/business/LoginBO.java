@@ -1,23 +1,30 @@
 package task2.business;
 
-import org.openqa.selenium.WebDriver;
 import pages.GmailLoginPage;
 
-/**
- * @author Nazar Lelyak.
- * @version 1.00 2014-05-23.
- */
 public class LoginBO {
 
     private GmailLoginPage loginPage;
 
-    public LoginBO(WebDriver driver) {
-        loginPage = new GmailLoginPage(driver);
+    public LoginBO() {
+        loginPage = new GmailLoginPage();
     }
 
-    public void login(String userLogin, String usepPass) {
+    public void login(String userLogin, String userPass) {
         loginPage.setLogin(userLogin);
-        loginPage.setPassword(userLogin);
+        loginPage.setPassword(userPass);
+        loginPage.clickLoginBtn();
+    }
+
+    public void setLogin(String loginName) {
+        loginPage.setLogin(loginName);
+    }
+
+    public void setPassword(String password) {
+        loginPage.setPassword(password);
+    }
+
+    public void clickLoginBtn() {
         loginPage.clickLoginBtn();
     }
 }
