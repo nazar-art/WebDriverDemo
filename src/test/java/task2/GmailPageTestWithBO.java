@@ -22,31 +22,23 @@ public class GmailPageTestWithBO {
 
     private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
 
-    private WebDriver driver = null;
-    private GmailLeftPanelBO leftPanelBO;
-    private GmailMainContentBO mainContentBO;
+    private WebDriver driver = WebDriverManager.getInstance();
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
+    private GmailMainContentBO mainContentBO;
+    private GmailLeftPanelBO leftPanelBO;
+
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
-
-    public GmailPageTestWithBO() {
-        driver = WebDriverManager.getInstance();
-        leftPanelBO = new GmailLeftPanelBO();
-        mainContentBO = new GmailMainContentBO();
-        headerPanelBO = new GmailHeaderPanelBO();
-        loginBO = new LoginBO();
-    }
 
     @BeforeTest
     public void setUp() {
         try {
             driver.get(GmailLoginPage.LOGIN_URL);
             driver.manage().window().maximize();
-            loginBO.setLogin(USER_LOGIN);
-            loginBO.setPassword(USER_PASSWORD);
-            loginBO.clickLoginBtn();
+            loginBO = new LoginBO();
+            loginBO.login(USER_LOGIN, USER_PASSWORD);
         } catch (Exception e) {
             log.error("setUp() for GmailPageTestWithBO fail, more details - ", e);
             Assert.fail("setUp() for GmailPageTestWithBO fail, more details - ", e.getCause());
@@ -56,12 +48,14 @@ public class GmailPageTestWithBO {
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
+            mainContentBO = new GmailMainContentBO();
             mainContentBO.pressComposeBtn();
             interrupt(SECONDS, 1);
             mainContentBO.typeTextToNewLetter(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
             interrupt(SECONDS, 1);
             mainContentBO.clickSaveAndClose();
             interrupt(SECONDS, 1);
+            leftPanelBO = new GmailLeftPanelBO();
             leftPanelBO.clickDraftLink();
 
             List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
@@ -76,6 +70,7 @@ public class GmailPageTestWithBO {
     @AfterTest
     public void tearDown() {
         try {
+            headerPanelBO = new GmailHeaderPanelBO();
             headerPanelBO.clickProfileOptionMenu();
             headerPanelBO.clickSignOutBtn();
         } catch (Exception e) {
@@ -88,8 +83,9 @@ public class GmailPageTestWithBO {
 
     /**
      * Check if list of letters from page contains text message.
+     *
      * @param webElementList list of web elements.
-     * @param message test message.
+     * @param message        test message.
      * @return if letter contain message true, otherwise false.
      */
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {

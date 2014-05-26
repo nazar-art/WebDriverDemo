@@ -10,4 +10,8 @@ public class Menu extends Element {
     public Menu(WebElement wrappedElement) {
         super(wrappedElement);
     }
+
+    public void click() {
+        wrappedElement.click();
+    }
 }

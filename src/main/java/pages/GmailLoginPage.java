@@ -29,8 +29,8 @@ public class GmailLoginPage extends BasePage {
     }
 
     public GmailPage loginAs(String userName, String userPass) {
-        loginField.sendKeys(userName);
-        passwordField.sendKeys(userPass);
+        loginField.typeText(userName);
+        passwordField.typeText(userPass);
         loginBtn.click();
 
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
@@ -45,12 +45,12 @@ public class GmailLoginPage extends BasePage {
 
     public void setLogin(String userLogin) {
         loginField.clear();
-        loginField.sendKeys(userLogin);
+        loginField.typeText(userLogin);
     }
 
     public void setPassword(String userPass) {
         passwordField.clear();
-        passwordField.sendKeys(userPass);
+        passwordField.typeText(userPass);
     }
 
     public void clickLoginBtn() {
