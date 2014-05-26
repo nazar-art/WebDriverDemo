@@ -13,6 +13,7 @@ import task2.elements.TextField;
 public class GmailLoginPage extends BasePage {
 
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
+    public static final String XPATH_EXPRESSION = "//*[@id=':4e']/div/div";
 
     @FindBy(id = "Email")
     private TextField loginField;
@@ -54,11 +55,10 @@ public class GmailLoginPage extends BasePage {
 
     public void clickLoginBtn() {
         loginBtn.click();
-//        todo check working without waiting ??
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//*[@id=':4e']/div/div")).isEnabled();
+                return d.findElement(By.xpath(XPATH_EXPRESSION)).isEnabled();
             }
         });
     }

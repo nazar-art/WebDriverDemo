@@ -2,21 +2,17 @@ package sandbox;
 
 import framework.UIElements.UIButton;
 import framework.UIElements.UIControlBuilder;
-import pages.utils.BrowserType;
 import framework.seleniumEngine.PageManager;
 import framework.seleniumEngine.SeleniumManager;
 import framework.seleniumEngine.UIRepository;
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.utils.BrowserType;
 
-/**
- * @author nlelyak.
- * @version 1.00 2014-05-23.
- */
-public class LoginTest {
+public class LoginTestDrive {
 
-    private static Logger log = Logger.getLogger(LoginTest.class);
+    private static Logger log = Logger.getLogger(LoginTestDrive.class);
 
     @BeforeClass
     public void setUp() {

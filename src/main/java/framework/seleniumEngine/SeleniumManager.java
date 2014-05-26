@@ -1,10 +1,10 @@
 package framework.seleniumEngine;
 
-import pages.utils.BrowserType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import pages.utils.BrowserType;
 
 
 public class SeleniumManager {

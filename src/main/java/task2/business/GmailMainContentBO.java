@@ -17,7 +17,7 @@ public class GmailMainContentBO {
         gmailPage.clickComposeBtn();
     }
 
-    public void typeTextToNewMsg(String msg) {
+    public void typeTextToNewLetter(String msg) {
         gmailPage.typeTextToMessage(msg);
     }
 

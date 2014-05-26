@@ -1,6 +1,5 @@
 package pages;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,11 +14,13 @@ import task2.elements.Menu;
 import task2.elements.TextField;
 
 import java.util.List;
-import static java.util.concurrent.TimeUnit.*;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static pages.utils.TestUtils.interrupt;
 
 public class GmailPage extends BasePage {
 
-    private static Logger log = Logger.getLogger(GmailPage.class);
+//    private static Logger log = Logger.getLogger(GmailPage.class);
 
     @FindBy(xpath = "//div[@class='T-I J-J5-Ji T-I-KE L3']")
     private Button composeBtn;
@@ -27,7 +28,6 @@ public class GmailPage extends BasePage {
     @FindBy(css = "#gb_71")
     private Link signOutLink;
 
-    //    @FindBy(xpath = "//iframe[@tabindex='1']")
     @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
     private WebElement frameMessageEditor;
 
@@ -72,9 +72,9 @@ public class GmailPage extends BasePage {
 //            TestUtils.interrupt(SECONDS, 1);
             driver.switchTo().frame(frameMessageEditor);
             WebElement element = driver.switchTo().activeElement();
-            TestUtils.interrupt(SECONDS, 1);
+            interrupt(SECONDS, 1);
             element.sendKeys(msg);
-            TestUtils.interrupt(SECONDS, 1);
+            interrupt(SECONDS, 1);
             driver.switchTo().defaultContent();
             frameSaveAndCloseBtn.click();
     }
@@ -99,7 +99,7 @@ public class GmailPage extends BasePage {
 
     public List<WebElement> takeAllMessages() {
         List<WebElement> elements = null;
-            TestUtils.interrupt(SECONDS, 1);
+            interrupt(SECONDS, 1);
             elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
         return elements;
     }
@@ -117,7 +117,11 @@ public class GmailPage extends BasePage {
     }
 
     public void typeTextToMessage(String msg) {
-        frameMessageEditor.sendKeys(msg);
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
+        driver.switchTo().frame(frameMessageEditor);
+        WebElement element = driver.switchTo().activeElement();
+        element.sendKeys(msg);
+        driver.switchTo().defaultContent();
     }
 
     public void clickSaveAndCloseBtn() {

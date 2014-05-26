@@ -16,6 +16,7 @@ import task2.business.LoginBO;
 
 import java.util.List;
 import static java.util.concurrent.TimeUnit.*;
+import static pages.utils.TestUtils.interrupt;
 
 public class GmailPageTestWithBO {
 
@@ -56,11 +57,13 @@ public class GmailPageTestWithBO {
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
             mainContentBO.pressComposeBtn();
-            TestUtils.interrupt(SECONDS, 1);
-            mainContentBO.typeTextToNewMsg(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+            interrupt(SECONDS, 1);
+            mainContentBO.typeTextToNewLetter(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+            interrupt(SECONDS, 1);
             mainContentBO.clickSaveAndClose();
+            interrupt(SECONDS, 1);
             leftPanelBO.clickDraftLink();
-            leftPanelBO.clickDraftLink();
+
             List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
             Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
                     "any letter doesn't contain test message");
