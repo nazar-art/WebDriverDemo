@@ -7,6 +7,7 @@ import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class ElementDecorator extends DefaultFieldDecorator {
 
@@ -23,6 +24,8 @@ public class ElementDecorator extends DefaultFieldDecorator {
             ElementLocator locator = factory.createLocator(field);
             if (locator == null) {
                 return null;
+            } else if (List.class.isAssignableFrom(field.getType())) {
+                return super.decorate(loader, field);
             }
 
             // create element for custom class

@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -48,6 +49,9 @@ public class GmailPage extends BasePage {
 
     @FindBy(css = ".gb_0")
     private Menu userOptionsDropDownMenu;
+
+    @FindAll({@FindBy(xpath = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]")})
+    private WebElement allMessagesPerPage;
 
     public GmailPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
@@ -109,7 +113,8 @@ public class GmailPage extends BasePage {
     }
 
     public List<WebElement> takeDraftMessage() {
-        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
+//        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
+        return (List<WebElement>) allMessagesPerPage;
     }
 
     public void clickComposeBtn() {
