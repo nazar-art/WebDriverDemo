@@ -1,6 +1,5 @@
-package task2;
+package pages.utils;
 
-import pages.utils.BrowserType;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +12,7 @@ import java.util.Properties;
 public class WebDriverManager {
 
     private static Logger log = Logger.getLogger(WebDriverManager.class);
+
     public static final String CONFIG_PROPERTIES = "src/main/resources/config.properties";
     public static final String KEY = "browser.type";
 

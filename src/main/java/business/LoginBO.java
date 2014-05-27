@@ -1,4 +1,4 @@
-package task2.business;
+package business;
 
 import pages.GmailLoginPage;
 

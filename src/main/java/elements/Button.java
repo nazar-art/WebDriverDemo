@@ -1,4 +1,4 @@
-package task2.elements;
+package elements;
 
 import org.openqa.selenium.WebElement;
 

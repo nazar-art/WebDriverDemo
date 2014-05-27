@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="Concurrent test suite" data-provider-thread-count="5">
+    <test name="concurrent" preserve-order="false"  verbose="1">
+        <groups>
+            <run>
+                <include name="PARALLEL_TEST" />
+            </run>
+        </groups>
+
+        <classes>
+            <class name="task3.ConcurrencyTestDrive" />
+        </classes>
+    </test>
+</suite>

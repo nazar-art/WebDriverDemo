@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.GmailPage;
 import pages.utils.TestUtils;
-import task2.WebDriverManager;
+import pages.utils.WebDriverManager;
 
 import java.util.List;
 

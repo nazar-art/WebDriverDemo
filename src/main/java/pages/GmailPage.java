@@ -7,12 +7,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.utils.DriverPool;
 import pages.utils.TestUtils;
-import task2.ElementDecorator;
-import task2.elements.Button;
-import task2.elements.Link;
-import task2.elements.Menu;
+import elements.ElementDecorator;
+import elements.Button;
+import elements.Link;
+import elements.Menu;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -30,7 +32,7 @@ public class GmailPage extends BasePage {
     private WebElement frameMessageEditor;
 
     @FindBy(xpath = "//img[@aria-label='Save & Close']")
-    private Button frameSaveAndCloseBtn;
+    private Button saveAndCloseFrameBtn;
 
     @FindBy(xpath = "//*[starts-with(@title, 'Inbox')]")
     private Link inboxMessagesLink;
@@ -51,7 +53,8 @@ public class GmailPage extends BasePage {
     private WebElement allMessagesPerPage;
 
     public GmailPage() {
-        PageFactory.initElements(new ElementDecorator(driver), this);
+//        PageFactory.initElements(new ElementDecorator(driver), this);
+        PageFactory.initElements(new ElementDecorator(DriverPool.getInstance()), this);
     }
 
     public void clickProfileOptionMenu() {
@@ -77,7 +80,7 @@ public class GmailPage extends BasePage {
             element.sendKeys(msg);
             interrupt(SECONDS, 1);
             driver.switchTo().defaultContent();
-            frameSaveAndCloseBtn.click();
+            saveAndCloseFrameBtn.click();
     }
 
     public void clickAllMailLink() {
@@ -100,17 +103,18 @@ public class GmailPage extends BasePage {
         draftMessagesLink.click();
     }
 
-    public List<WebElement> takeAllMessages() {
+    public synchronized List<WebElement> takeAllMessages() {
         List<WebElement> elements = null;
             interrupt(SECONDS, 1);
             elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
-        return elements;
+        return Collections.synchronizedList(elements);
     }
 
     public List<WebElement> takeInboxMessage() {
         return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
     }
 
+    @SuppressWarnings("unchecked")
     public List<WebElement> takeDraftMessage() {
         return (List<WebElement>) allMessagesPerPage;
     }
@@ -128,7 +132,7 @@ public class GmailPage extends BasePage {
     }
 
     public void clickSaveAndCloseBtn() {
-        frameSaveAndCloseBtn.click();
+        saveAndCloseFrameBtn.click();
     }
 
 }

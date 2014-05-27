@@ -1,4 +1,4 @@
-package task2;
+package elements;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;

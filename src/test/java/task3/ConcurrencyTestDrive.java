@@ -1,34 +1,36 @@
-package task2;
+package task3;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.utils.TestUtils;
+import pages.utils.DriverPool;
 import business.GmailHeaderPanelBO;
 import business.GmailLeftPanelBO;
 import business.GmailMainContentBO;
 import business.LoginBO;
-import pages.utils.WebDriverManager;
 
 import java.util.List;
-import static java.util.concurrent.TimeUnit.*;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static pages.utils.TestUtils.interrupt;
 
-public class GmailPageTestWithBO {
+public class ConcurrencyTestDrive {
 
-    private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
+    private static final Logger log = Logger.getLogger(ConcurrencyTestDrive.class);
 
-    private WebDriver driver = WebDriverManager.getInstance();
+    private WebDriver driver = DriverPool.getInstance();
+//    private WebDriver driver = WebDriverManager.getInstance();
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
     private GmailLeftPanelBO leftPanelBO;
-
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
@@ -36,23 +38,25 @@ public class GmailPageTestWithBO {
     @BeforeTest
     public void setUp() {
         try {
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.get(GmailLoginPage.LOGIN_URL);
             driver.manage().window().maximize();
             loginBO = new LoginBO();
             loginBO.login(USER_LOGIN, USER_PASSWORD);
-        } catch (Exception e) {
-            log.error("setUp() for GmailPageTestWithBO fail, more details - ", e);
-            Assert.fail("setUp() for GmailPageTestWithBO fail, more details - ", e.getCause());
+        } catch (Throwable e) {
+            log.error("Error at setUp() ", e);
+            fail("Error at setUp() ", e.getCause());
         }
     }
 
-    @Test(groups = "GMAIL_PAGE")
-    public void testIfDraftFolderContainsSavedAndClosedDraft() {
+    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", dataProviderClass = task3.DataSource.class,
+            threadPoolSize = 5)
+    public void testConcurrencySavedAndClosedDrafts(String msg) {
         try {
             mainContentBO = new GmailMainContentBO();
             mainContentBO.pressComposeBtn();
             interrupt(SECONDS, 1);
-            mainContentBO.typeTextToNewLetter(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+            mainContentBO.typeTextToNewLetter(msg);
             interrupt(SECONDS, 1);
             mainContentBO.clickSaveAndClose();
             interrupt(SECONDS, 1);
@@ -60,11 +64,11 @@ public class GmailPageTestWithBO {
             leftPanelBO.clickDraftLink();
 
             List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
-            Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
-                    "any letter doesn't contain test message");
-        } catch (Exception e) {
-            log.error("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
-            Assert.fail("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
+            assertTrue(letterContainsTextMessage(allMessages, msg),
+                    "letter doesn't contain test message");
+        } catch (Throwable e) {
+            log.error("Error at testConcurrencySavedAndClosedDrafts() ", e);
+            fail("Error at testConcurrencySavedAndClosedDrafts() ", e);
         }
     }
 
@@ -74,11 +78,12 @@ public class GmailPageTestWithBO {
             headerPanelBO = new GmailHeaderPanelBO();
             headerPanelBO.clickProfileOptionMenu();
             headerPanelBO.clickSignOutBtn();
-        } catch (Exception e) {
-            log.error("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e);
-            Assert.fail("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e.getCause());
+        } catch (Throwable e) {
+            log.error("Error at tearDown() ", e);
+            fail("Error at tearDown() ", e.getCause());
         } finally {
-            WebDriverManager.closeQuietly();
+            DriverPool.close();
+//            WebDriverManager.closeQuietly();
         }
     }
 
@@ -96,7 +101,7 @@ public class GmailPageTestWithBO {
             if (fullLetterText.startsWith("-")) {
                 String letterText = fullLetterText.substring(2);
 //                System.out.printf("short: %s%n", letterText);
-                if (letterText.equals(message)) {
+                if (letterText.contains(message)) {
                     return true;
                 }
             }
