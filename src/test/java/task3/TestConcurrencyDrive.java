@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.utils.DriverPool;
@@ -17,7 +18,6 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 import static pages.utils.TestUtils.interrupt;
 
 public class TestConcurrencyDrive {
@@ -25,7 +25,7 @@ public class TestConcurrencyDrive {
     private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
     private WebDriver driver = DriverPool.getDriver();
-//    private WebDriver driver = WebDriverManager.getDriver();
+
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
@@ -36,36 +36,36 @@ public class TestConcurrencyDrive {
 
     @BeforeTest
     public void setUp() {
-        try {
-            driver.get(GmailLoginPage.LOGIN_URL);
-            loginBO = new LoginBO();
-            loginBO.login(USER_LOGIN, USER_PASSWORD);
-        } catch (Throwable e) {
+//        try {
+        driver.get(GmailLoginPage.LOGIN_URL);
+        loginBO = new LoginBO();
+        loginBO.login(USER_LOGIN, USER_PASSWORD);
+        /*} catch (Throwable e) {
             log.error("Error at setUp() ", e);
             fail("Error at setUp() ", e.getCause());
-        }
+        }*/
     }
 
-    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", dataProviderClass = task3.DataSource.class, threadPoolSize = 5)
+    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", threadPoolSize = 5)
     public void testConcurrencySavedAndClosedDrafts(String msg) {
-        try {
-            mainContentBO = new GmailMainContentBO();
-            mainContentBO.pressComposeBtn();
-            interrupt(SECONDS, 1);
-            mainContentBO.typeTextToNewLetter(msg);
-            interrupt(SECONDS, 1);
-            mainContentBO.clickSaveAndClose();
-            interrupt(SECONDS, 1);
-            leftPanelBO = new GmailLeftPanelBO();
-            leftPanelBO.clickDraftLink();
+//        try {
+        mainContentBO = new GmailMainContentBO();
+        mainContentBO.pressComposeBtn();
+        interrupt(SECONDS, 1);
+        mainContentBO.typeTextToNewLetter(msg);
+        interrupt(SECONDS, 1);
+        mainContentBO.clickSaveAndClose();
+        interrupt(SECONDS, 1);
+        leftPanelBO = new GmailLeftPanelBO();
+        leftPanelBO.clickDraftLink();
 
-            List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
-            assertTrue(letterContainsTextMessage(allMessages, msg),
-                    "letter doesn't contain test message");
-        } catch (Throwable e) {
+        List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
+        assertTrue(letterContainsTextMessage(allMessages, msg),
+                "letter doesn't contain test message");
+        /*} catch (Throwable e) {
             log.error("Error at testConcurrencySavedAndClosedDrafts() ", e);
             fail("Error at testConcurrencySavedAndClosedDrafts() ", e);
-        }
+        }*/
     }
 
     @AfterTest
@@ -74,10 +74,11 @@ public class TestConcurrencyDrive {
             headerPanelBO = new GmailHeaderPanelBO();
             headerPanelBO.clickProfileOptionMenu();
             headerPanelBO.clickSignOutBtn();
-        } catch (Throwable e) {
+        }
+        /*catch (Throwable e) {
             log.error("Error at tearDown() ", e);
             fail("Error at tearDown() ", e.getCause());
-        } finally {
+        } */ finally {
             DriverPool.closeDriver();
 //            WebDriverManager.closeQuietly();
         }
@@ -103,6 +104,22 @@ public class TestConcurrencyDrive {
             }
         }
         return false;
+    }
+
+    @DataProvider(parallel = true)
+    public Object[][] concurrencyData() {
+        return new Object[][]{
+                {"This is the test message for draft link #1"}, {"This is the test message for draft link #2"},
+                {"This is the test message for draft link #3"}, {"This is the test message for draft link #4"},
+                {"This is the test message for draft link #5"}, {"This is the test message for draft link #6"},
+                {"This is the test message for draft link #7"}, {"This is the test message for draft link #8"},
+                {"This is the test message for draft link #9"}, {"This is the test message for draft link #10"},
+                {"This is the test message for draft link #11"}, {"This is the test message for draft link #12"},
+                {"This is the test message for draft link #13"}, {"This is the test message for draft link #14"},
+                {"This is the test message for draft link #15"}, {"This is the test message for draft link #16"},
+                {"This is the test message for draft link #17"}, {"This is the test message for draft link #18"},
+                {"This is the test message for draft link #19"}, {"This is the test message for draft link #20"}
+        };
     }
 
 }

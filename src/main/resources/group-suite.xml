@@ -8,8 +8,10 @@
 				<include name="GMAIL_PAGE" />
 			</run>
 		</groups>
+
 		<classes>
 			<class name="task1.GmailPageTestWithPageObject" />
+			<class name="task2.GmailPageTestWithBO" />
 		</classes>
 	</test>
 </suite>

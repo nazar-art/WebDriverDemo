@@ -8,7 +8,9 @@ public class BasePage implements IPage {
     protected WebDriver driver = null;
 
     public BasePage() {
-//        this.driver = WebDriverManager.getDriver();
+//        this.driver = WebDriverManager.getInstance();
+
+//        driver instance for parallel test
         this.driver = DriverPool.getDriver();
     }
 

@@ -12,7 +12,7 @@ public class DriverPool {
         @Override
         protected WebDriver initialValue() {
             WebDriver driver = new FirefoxDriver();
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             return driver;
         }
     };
@@ -23,8 +23,10 @@ public class DriverPool {
 
     public static synchronized void closeDriver() {
         WebDriver driver = instance.get();
+
         driver.close();
         driver.quit();
+
         instance.remove();
     }
 }

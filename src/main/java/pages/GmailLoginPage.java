@@ -3,12 +3,15 @@ package pages;
 import elements.Button;
 import elements.ElementDecorator;
 import elements.TextField;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
+
+import static pages.utils.TestUtils.interrupt;
 
 public class GmailLoginPage extends BasePage {
 
@@ -44,22 +47,23 @@ public class GmailLoginPage extends BasePage {
     }
 
     public void setLogin(String userLogin) {
-        loginField.clear();
+//        loginField.clear();
         loginField.typeText(userLogin);
     }
 
     public void setPassword(String userPass) {
-        passwordField.clear();
+//        passwordField.clear();
         passwordField.typeText(userPass);
     }
 
     public void clickLoginBtn() {
         loginBtn.click();
-        (new WebDriverWait(driver, 30)).until(new ExpectedCondition<Boolean>() {
+        interrupt(TimeUnit.SECONDS, 1);
+        /*(new WebDriverWait(driver, 30)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
                 return d.findElement(By.xpath(XPATH_EXPRESSION)).isEnabled();
             }
-        });
+        });*/
     }
 }

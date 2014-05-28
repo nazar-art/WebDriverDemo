@@ -52,7 +52,6 @@ public class GmailPage extends BasePage {
     private WebElement allMessagesPerPage;
 
     public GmailPage() {
-//        PageFactory.initElements(new ElementDecorator(driver), this);
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
