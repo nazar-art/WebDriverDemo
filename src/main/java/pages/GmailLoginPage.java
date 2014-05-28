@@ -1,15 +1,14 @@
 package pages;
 
+import elements.Button;
+import elements.ElementDecorator;
+import elements.TextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import elements.ElementDecorator;
-import elements.Button;
-import elements.TextField;
-import pages.utils.DriverPool;
 
 public class GmailLoginPage extends BasePage {
 
@@ -26,8 +25,7 @@ public class GmailLoginPage extends BasePage {
     private volatile Button loginBtn;
 
     public GmailLoginPage() {
-//        PageFactory.initElements(new ElementDecorator(driver), this);
-        PageFactory.initElements(new ElementDecorator(DriverPool.getInstance()), this);
+        PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
     public GmailPage loginAs(String userName, String userPass) {

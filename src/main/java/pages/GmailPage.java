@@ -1,5 +1,9 @@
 package pages;
 
+import elements.Button;
+import elements.ElementDecorator;
+import elements.Link;
+import elements.Menu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -7,12 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.DriverPool;
 import pages.utils.TestUtils;
-import elements.ElementDecorator;
-import elements.Button;
-import elements.Link;
-import elements.Menu;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +53,7 @@ public class GmailPage extends BasePage {
 
     public GmailPage() {
 //        PageFactory.initElements(new ElementDecorator(driver), this);
-        PageFactory.initElements(new ElementDecorator(DriverPool.getInstance()), this);
+        PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
     public void clickProfileOptionMenu() {
@@ -74,23 +73,19 @@ public class GmailPage extends BasePage {
 
     public void sendTextToMessageFrame(String msg) {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
-            driver.switchTo().frame(frameMessageEditor);
-            WebElement element = driver.switchTo().activeElement();
-            interrupt(SECONDS, 1);
-            element.sendKeys(msg);
-            interrupt(SECONDS, 1);
-            driver.switchTo().defaultContent();
-            saveAndCloseFrameBtn.click();
+        driver.switchTo().frame(frameMessageEditor);
+        WebElement element = driver.switchTo().activeElement();
+        interrupt(SECONDS, 1);
+        element.sendKeys(msg);
+        interrupt(SECONDS, 1);
+        driver.switchTo().defaultContent();
+        saveAndCloseFrameBtn.click();
     }
 
     public void clickAllMailLink() {
-        /*(new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                elementToBeClickable(moreOptionsLink));*/
         interrupt(SECONDS, 1);
         moreOptionsLink.click();
 
-        /*(new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                elementToBeClickable(allMailLink));*/
         interrupt(SECONDS, 1);
         allMailLink.click();
     }
@@ -105,8 +100,8 @@ public class GmailPage extends BasePage {
 
     public synchronized List<WebElement> takeAllMessages() {
         List<WebElement> elements = null;
-            interrupt(SECONDS, 1);
-            elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
+        interrupt(SECONDS, 1);
+        elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
         return Collections.synchronizedList(elements);
     }
 

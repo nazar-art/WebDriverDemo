@@ -1,5 +1,9 @@
 package task3;
 
+import business.GmailHeaderPanelBO;
+import business.GmailLeftPanelBO;
+import business.GmailMainContentBO;
+import business.LoginBO;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,25 +12,20 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.utils.DriverPool;
-import business.GmailHeaderPanelBO;
-import business.GmailLeftPanelBO;
-import business.GmailMainContentBO;
-import business.LoginBO;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import static pages.utils.TestUtils.interrupt;
 
-public class ConcurrencyTestDrive {
+public class TestConcurrencyDrive {
 
-    private static final Logger log = Logger.getLogger(ConcurrencyTestDrive.class);
+    private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
-    private WebDriver driver = DriverPool.getInstance();
-//    private WebDriver driver = WebDriverManager.getInstance();
+    private WebDriver driver = DriverPool.getDriver();
+//    private WebDriver driver = WebDriverManager.getDriver();
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
@@ -38,9 +37,7 @@ public class ConcurrencyTestDrive {
     @BeforeTest
     public void setUp() {
         try {
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.get(GmailLoginPage.LOGIN_URL);
-            driver.manage().window().maximize();
             loginBO = new LoginBO();
             loginBO.login(USER_LOGIN, USER_PASSWORD);
         } catch (Throwable e) {
@@ -49,8 +46,7 @@ public class ConcurrencyTestDrive {
         }
     }
 
-    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", dataProviderClass = task3.DataSource.class,
-            threadPoolSize = 5)
+    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", dataProviderClass = task3.DataSource.class, threadPoolSize = 5)
     public void testConcurrencySavedAndClosedDrafts(String msg) {
         try {
             mainContentBO = new GmailMainContentBO();
@@ -82,7 +78,7 @@ public class ConcurrencyTestDrive {
             log.error("Error at tearDown() ", e);
             fail("Error at tearDown() ", e.getCause());
         } finally {
-            DriverPool.close();
+            DriverPool.closeDriver();
 //            WebDriverManager.closeQuietly();
         }
     }

@@ -8,22 +8,23 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverPool {
 
-    private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>();
+    private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>() {
+        @Override
+        protected WebDriver initialValue() {
+            WebDriver driver = new FirefoxDriver();
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            return driver;
+        }
+    };
 
-    private DriverPool() {
-    }
-
-    public static synchronized WebDriver getInstance() {
-            if (instance.get() == null) {
-                instance.set(new FirefoxDriver());
-                instance.get().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            }
+    public static synchronized WebDriver getDriver() {
         return instance.get();
     }
 
-    public static void close() {
-        instance.get().quit();
-        instance = null;
-//        driver = null;
+    public static synchronized void closeDriver() {
+        WebDriver driver = instance.get();
+        driver.close();
+        driver.quit();
+        instance.remove();
     }
 }

@@ -73,7 +73,26 @@
                                 <version>${maven-surefire-version}</version>
                             </dependency>
                         </dependencies>
+
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/main/resources/concurrent-suite.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+
+                            <systemPropertyVariables>
+                                <selenium-version>${selenium-version}</selenium-version>
+                                <browser>browser-other</browser>
+                            </systemPropertyVariables>
+
+                            <parallel>methods</parallel>
+                            <threadCount>5</threadCount>
+
+                            <includes>
+                                <include>**/TestConcurrencyDrive</include>
+                            </includes>
+                        </configuration>
                     </plugin>
+
                     <plugin>
                         <artifactId>maven-site-plugin</artifactId>
                         <version>3.3</version>
@@ -101,7 +120,7 @@
         <profile>
             <id>integration-tests</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
 
             <build>
@@ -140,7 +159,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
                 </plugins>
             </build>
 
@@ -182,7 +200,6 @@
             </reporting>
 
         </profile>
+
     </profiles>
-
-
 </project>

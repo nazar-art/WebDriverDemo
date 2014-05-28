@@ -8,8 +8,8 @@ public class BasePage implements IPage {
     protected WebDriver driver = null;
 
     public BasePage() {
-//        this.driver = WebDriverManager.getInstance();
-        this.driver = DriverPool.getInstance();
+//        this.driver = WebDriverManager.getDriver();
+        this.driver = DriverPool.getDriver();
     }
 
     @Override
