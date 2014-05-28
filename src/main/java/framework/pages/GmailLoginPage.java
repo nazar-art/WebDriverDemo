@@ -1,4 +1,4 @@
-package framework.controlPages;
+package framework.pages;
 
 import framework.UIElements.BaseUIPage;
 import framework.UIElements.UIButton;

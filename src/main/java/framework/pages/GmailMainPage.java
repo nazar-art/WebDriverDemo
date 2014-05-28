@@ -1,4 +1,4 @@
-package framework.controlPages;
+package framework.pages;
 
 import framework.UIElements.*;
 import org.openqa.selenium.By;

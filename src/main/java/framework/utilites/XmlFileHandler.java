@@ -7,10 +7,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-/**
- * @author nlelyak.
- * @version 1.00 2014-05-23.
- */
 public class XmlFileHandler extends BaseFileHandler {
     private static Logger log = Logger.getLogger(XmlFileHandler.class);
 
@@ -20,9 +16,14 @@ public class XmlFileHandler extends BaseFileHandler {
             XPath xPath = XPathFactory.newInstance().newXPath();
             result = xPath.evaluate(xpathNode, source);
         } catch (XPathExpressionException e) {
-            log.error("Unable to read xml node. Details -", e);
-//            System.out.println("Unable to read xml node. Details -" + e.getCause());
+            log.error("Unable to read xml node. Details - ", e);
         }
         return result;
     }
+
+    /*public static void main(String[] args) {
+        XmlFileHandler handler = new XmlFileHandler();
+        String result = handler.readXmlNode(new InputSource("src/main/resources/webAutomationConfig.xml"), "baseUrl");
+        System.out.println("Here is result: " + result);
+    }*/
 }

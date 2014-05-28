@@ -1,7 +1,7 @@
 package framework.seleniumEngine;
 
 import framework.UIElements.*;
-import framework.controlPages.GmailLoginPage;
+import framework.pages.GmailLoginPage;
 
 /**
  * @author nlelyak.
@@ -12,7 +12,7 @@ public class UIRepository {
    public static class Pages {
 
         public static class GmailLoginPage {
-            public static UIMapping self = new UIMapping(SearchLevelType.Page, SearchType.ByUrl, "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail", framework.controlPages.GmailLoginPage.class);
+            public static UIMapping self = new UIMapping(SearchLevelType.Page, SearchType.ByUrl, "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail", framework.pages.GmailLoginPage.class);
 
             public static UIMapping emailField = new UIMapping(SearchLevelType.Page, SearchType.ByXpath, "//input[@id='Email']", UIInputText.class);
 

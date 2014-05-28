@@ -11,7 +11,7 @@ public class BasePage implements IPage {
 //        this.driver = WebDriverManager.getInstance();
 
 //        driver instance for parallel test
-        this.driver = DriverPool.getDriver();
+        this.driver = (WebDriver) DriverPool.getDriver();
     }
 
     @Override

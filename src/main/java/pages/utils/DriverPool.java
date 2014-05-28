@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 
+
 public class DriverPool {
 
     private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>() {
@@ -19,6 +20,8 @@ public class DriverPool {
 
     public static synchronized WebDriver getDriver() {
         return instance.get();
+        //
+//        return new BrowsersPool(20);
     }
 
     public static synchronized void closeDriver() {

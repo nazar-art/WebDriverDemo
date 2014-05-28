@@ -24,7 +24,8 @@ public class TestConcurrencyDrive {
 
     private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
-    private WebDriver driver = DriverPool.getDriver();
+//    private WebDriver driver = DriverPool.getDriver();
+    private WebDriver driver = (WebDriver) DriverPool.getDriver();
 
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
@@ -46,7 +47,7 @@ public class TestConcurrencyDrive {
         }*/
     }
 
-    @Test(groups = "PARALLEL_TEST", dataProvider = "concurrencyData", threadPoolSize = 5)
+    @Test(groups = { "PARALLEL_TEST" }, dataProvider = "concurrencyData", threadPoolSize = 5)
     public void testConcurrencySavedAndClosedDrafts(String msg) {
 //        try {
         mainContentBO = new GmailMainContentBO();
@@ -107,7 +108,7 @@ public class TestConcurrencyDrive {
     }
 
     @DataProvider(parallel = true)
-    public Object[][] concurrencyData() {
+    public static Object[][] concurrencyData() {
         return new Object[][]{
                 {"This is the test message for draft link #1"}, {"This is the test message for draft link #2"},
                 {"This is the test message for draft link #3"}, {"This is the test message for draft link #4"},
