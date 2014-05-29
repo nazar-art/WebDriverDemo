@@ -14,6 +14,7 @@ public class LoginBO {
         loginPage.setLogin(userLogin);
         loginPage.setPassword(userPass);
         loginPage.clickLoginBtn();
+
     }
 
     public void setLogin(String loginName) {

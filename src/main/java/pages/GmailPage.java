@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static pages.utils.TestUtils.interrupt;
 
 public class GmailPage extends BasePage {
@@ -114,6 +115,8 @@ public class GmailPage extends BasePage {
     }
 
     public void clickComposeBtn() {
+//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
         composeBtn.click();
     }
 

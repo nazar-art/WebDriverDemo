@@ -14,5 +14,4 @@ public class GmailLeftPanelBO {
         gmailPage.clickDraftLink();
     }
 
-
 }

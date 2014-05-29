@@ -1,17 +1,16 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
-import pages.utils.DriverPool;
+import pages.utils.WebDriverManager;
 
 public class BasePage implements IPage {
 
     protected WebDriver driver = null;
 
     public BasePage() {
-//        this.driver = WebDriverManager.getInstance();
-
+        this.driver = WebDriverManager.getInstance();
 //        driver instance for parallel test
-        this.driver = (WebDriver) DriverPool.getDriver();
+//        this.driver = DriverPool.getDriver();
     }
 
     @Override

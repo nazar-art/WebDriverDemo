@@ -51,11 +51,11 @@ public class TestConcurrencyDrive {
     public void testConcurrencySavedAndClosedDrafts(String msg) {
 //        try {
         mainContentBO = new GmailMainContentBO();
-        mainContentBO.pressComposeBtn();
+        mainContentBO.clickComposeBtn();
         interrupt(SECONDS, 1);
         mainContentBO.typeTextToNewLetter(msg);
         interrupt(SECONDS, 1);
-        mainContentBO.clickSaveAndClose();
+        mainContentBO.clickSaveAndCloseBtn();
         interrupt(SECONDS, 1);
         leftPanelBO = new GmailLeftPanelBO();
         leftPanelBO.clickDraftLink();
@@ -75,6 +75,7 @@ public class TestConcurrencyDrive {
             headerPanelBO = new GmailHeaderPanelBO();
             headerPanelBO.clickProfileOptionMenu();
             headerPanelBO.clickSignOutBtn();
+            DriverPool.counter.decrementAndGet();
         }
         /*catch (Throwable e) {
             log.error("Error at tearDown() ", e);

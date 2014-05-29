@@ -4,10 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
-
+import static pages.utils.TestUtils.interrupt;
 
 public class DriverPool {
+
+    public static final int MAX_NUMBER = 5;
+
+    public static AtomicInteger counter = new AtomicInteger(0);
 
     private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>() {
         @Override
@@ -19,9 +24,12 @@ public class DriverPool {
     };
 
     public static synchronized WebDriver getDriver() {
+        while (counter.get() > MAX_NUMBER) {
+            interrupt(TimeUnit.SECONDS, 1200);
+        }
+        counter.getAndIncrement();
+
         return instance.get();
-        //
-//        return new BrowsersPool(20);
     }
 
     public static synchronized void closeDriver() {
@@ -31,5 +39,6 @@ public class DriverPool {
         driver.quit();
 
         instance.remove();
+        counter.decrementAndGet();
     }
 }

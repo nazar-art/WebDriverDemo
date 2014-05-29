@@ -39,7 +39,7 @@ public class GmailLoginPage extends BasePage {
         (new WebDriverWait(driver, 60)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith("gmail");
+                return d.getTitle().toLowerCase().contains("gmail");
             }
         });
 

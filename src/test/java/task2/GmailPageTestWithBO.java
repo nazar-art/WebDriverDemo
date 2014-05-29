@@ -1,5 +1,9 @@
 package task2;
 
+import business.GmailHeaderPanelBO;
+import business.GmailLeftPanelBO;
+import business.GmailMainContentBO;
+import business.LoginBO;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,15 +13,9 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.utils.TestUtils;
-import business.GmailHeaderPanelBO;
-import business.GmailLeftPanelBO;
-import business.GmailMainContentBO;
-import business.LoginBO;
 import pages.utils.WebDriverManager;
 
 import java.util.List;
-import static java.util.concurrent.TimeUnit.*;
-import static pages.utils.TestUtils.interrupt;
 
 public class GmailPageTestWithBO {
 
@@ -50,12 +48,14 @@ public class GmailPageTestWithBO {
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
             mainContentBO = new GmailMainContentBO();
-            mainContentBO.pressComposeBtn();
+            mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+            /*mainContentBO.clickComposeBtn();
             interrupt(SECONDS, 1);
             mainContentBO.typeTextToNewLetter(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
             interrupt(SECONDS, 1);
-            mainContentBO.clickSaveAndClose();
-            interrupt(SECONDS, 1);
+            mainContentBO.clickSaveAndCloseBtn();
+            interrupt(SECONDS, 1);*/
+            //
             leftPanelBO = new GmailLeftPanelBO();
             leftPanelBO.clickDraftLink();
 
