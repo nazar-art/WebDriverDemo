@@ -34,6 +34,7 @@ public class WebDriverManager {
                         }
 
                         case Chrome: {
+                            System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
                             return instance = localInstance = new ChromeDriver();
                         }
 
@@ -41,7 +42,7 @@ public class WebDriverManager {
                             return instance = localInstance = new InternetExplorerDriver();
                         }
                         default: {
-                            throw new RuntimeException("Not supported");
+                            throw new RuntimeException("Not supported browser type");
                         }
                     }
                 }

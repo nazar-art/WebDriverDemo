@@ -36,6 +36,7 @@ public class SeleniumManager {
             }
 
             case Chrome: {
+                System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
                 return driver = new ChromeDriver();
             }
 
