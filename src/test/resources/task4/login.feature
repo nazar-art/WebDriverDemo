@@ -9,3 +9,6 @@ Scenario: Check draft folder after saving and closed letter
   And click 'Draft' link
   Then Draft folder should contains letter with "This is the test message for draft link"
 
+#Examples:
+#|login                |pass             |message                                  |url|
+#|"testt3820@gmail.com"|"CreateAPassword"|"This is the test message for draft link"|"https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail"|

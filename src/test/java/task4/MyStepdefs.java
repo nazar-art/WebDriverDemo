@@ -14,7 +14,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.TestUtils;
 import pages.utils.WebDriverManager;
 
 import java.util.List;
@@ -42,6 +41,7 @@ public class MyStepdefs {
     @After
     public void tearDown() {
         headerPanelBO = new GmailHeaderPanelBO();
+
         new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.cssSelector(".gb_0")));
         headerPanelBO.clickProfileOptionMenu();
         new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.cssSelector("#gb_71")));
@@ -85,7 +85,7 @@ public class MyStepdefs {
     public void Draft_folder_should_contains_letter_with(String msg) {
         List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
         assertTrue("any letter doesn't contain test message",
-                letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST));
+                letterContainsTextMessage(allMessages, msg));
     }
 
     /**

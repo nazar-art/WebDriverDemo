@@ -1,18 +1,19 @@
 package pages.utils;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static pages.utils.TestUtils.interrupt;
-
 public class DriverPool {
 
     public static final int MAX_NUMBER = 5;
 
-    public static AtomicInteger counter = new AtomicInteger(0);
+    private static final Object waitObj = new Object();
+    private static AtomicInteger counter = new AtomicInteger(0);
+    private static Logger log = Logger.getLogger(DriverPool.class);
 
     private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>() {
         @Override
@@ -24,10 +25,16 @@ public class DriverPool {
     };
 
     public static synchronized WebDriver getDriver() {
-        while (counter.get() > MAX_NUMBER) {
-            interrupt(TimeUnit.SECONDS, 1200);
+        try {
+            while (counter.get() > MAX_NUMBER) {
+                synchronized (waitObj) {
+                    waitObj.wait();
+                }
+            }
+            counter.getAndIncrement();
+        } catch (InterruptedException e) {
+            log.error(e);
         }
-        counter.getAndIncrement();
 
         return instance.get();
     }
@@ -40,5 +47,8 @@ public class DriverPool {
 
         instance.remove();
         counter.decrementAndGet();
+        synchronized (waitObj) {
+            waitObj.notifyAll();
+        }
     }
 }

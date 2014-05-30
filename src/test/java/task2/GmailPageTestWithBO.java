@@ -27,7 +27,6 @@ public class GmailPageTestWithBO {
     private GmailMainContentBO mainContentBO;
     private GmailLeftPanelBO leftPanelBO;
 
-
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
 

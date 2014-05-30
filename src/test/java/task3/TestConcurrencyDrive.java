@@ -18,14 +18,15 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static pages.utils.TestUtils.interrupt;
 
 public class TestConcurrencyDrive {
 
     private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
-//    private WebDriver driver = DriverPool.getDriver();
-    private WebDriver driver = (WebDriver) DriverPool.getDriver();
+    //    private WebDriver driver = DriverPool.getDriver();
+    private WebDriver driver = DriverPool.getDriver();
 
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
@@ -37,36 +38,36 @@ public class TestConcurrencyDrive {
 
     @BeforeTest
     public void setUp() {
-//        try {
-        driver.get(GmailLoginPage.LOGIN_URL);
-        loginBO = new LoginBO();
-        loginBO.login(USER_LOGIN, USER_PASSWORD);
-        /*} catch (Throwable e) {
+        try {
+            driver.get(GmailLoginPage.LOGIN_URL);
+            loginBO = new LoginBO();
+            loginBO.login(USER_LOGIN, USER_PASSWORD);
+        } catch (Throwable e) {
             log.error("Error at setUp() ", e);
             fail("Error at setUp() ", e.getCause());
-        }*/
+        }
     }
 
-    @Test(groups = { "PARALLEL_TEST" }, dataProvider = "concurrencyData", threadPoolSize = 5)
+    @Test(groups = {"PARALLEL_TEST"}, dataProvider = "concurrencyData", threadPoolSize = 5)
     public void testConcurrencySavedAndClosedDrafts(String msg) {
-//        try {
-        mainContentBO = new GmailMainContentBO();
-        mainContentBO.clickComposeBtn();
-        interrupt(SECONDS, 1);
-        mainContentBO.typeTextToNewLetter(msg);
-        interrupt(SECONDS, 1);
-        mainContentBO.clickSaveAndCloseBtn();
-        interrupt(SECONDS, 1);
-        leftPanelBO = new GmailLeftPanelBO();
-        leftPanelBO.clickDraftLink();
+        try {
+            mainContentBO = new GmailMainContentBO();
+            mainContentBO.clickComposeBtn();
+            interrupt(SECONDS, 1);
+            mainContentBO.typeTextToNewLetter(msg);
+            interrupt(SECONDS, 1);
+            mainContentBO.clickSaveAndCloseBtn();
+            interrupt(SECONDS, 1);
+            leftPanelBO = new GmailLeftPanelBO();
+            leftPanelBO.clickDraftLink();
 
-        List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
-        assertTrue(letterContainsTextMessage(allMessages, msg),
-                "letter doesn't contain test message");
-        /*} catch (Throwable e) {
+            List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
+            assertTrue(letterContainsTextMessage(allMessages, msg),
+                    "letter doesn't contain test message");
+        } catch (Throwable e) {
             log.error("Error at testConcurrencySavedAndClosedDrafts() ", e);
             fail("Error at testConcurrencySavedAndClosedDrafts() ", e);
-        }*/
+        }
     }
 
     @AfterTest
@@ -75,12 +76,10 @@ public class TestConcurrencyDrive {
             headerPanelBO = new GmailHeaderPanelBO();
             headerPanelBO.clickProfileOptionMenu();
             headerPanelBO.clickSignOutBtn();
-            DriverPool.counter.decrementAndGet();
-        }
-        /*catch (Throwable e) {
+        } catch (Throwable e) {
             log.error("Error at tearDown() ", e);
             fail("Error at tearDown() ", e.getCause());
-        } */ finally {
+        } finally {
             DriverPool.closeDriver();
 //            WebDriverManager.closeQuietly();
         }
