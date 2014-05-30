@@ -115,7 +115,6 @@ public class GmailPage extends BasePage {
     }
 
     public void clickComposeBtn() {
-//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
         new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
         composeBtn.click();
     }

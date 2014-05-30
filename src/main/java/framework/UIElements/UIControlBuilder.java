@@ -3,7 +3,6 @@ package framework.UIElements;
 import framework.seleniumEngine.FindManager;
 import framework.seleniumEngine.SeleniumManager;
 import framework.seleniumEngine.UIMapping;
-import framework.seleniumEngine.WebAppConfig;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -43,11 +42,12 @@ public class UIControlBuilder {
     public static BaseUIPage buildPage(UIMapping uiMapping) {
         Object controlInst = null;
 
-        String baseUrl = WebAppConfig.getInstance().getBaseUrl();
+//        String baseUrl = WebAppConfig.getInstance().getBaseUrl();
 
         // validate if page can be construct
         String currentUrl = manager.activeBrowser().getCurrentUrl();
-        String expUrl = baseUrl + uiMapping.getLocator();
+//        String expUrl = baseUrl + uiMapping.getLocator();
+        String expUrl = uiMapping.getLocator();
 
         // todo - replace by smart validation
         if (!currentUrl.equalsIgnoreCase(expUrl)) {

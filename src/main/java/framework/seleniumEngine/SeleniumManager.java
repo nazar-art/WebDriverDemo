@@ -50,6 +50,7 @@ public class SeleniumManager {
 
     public static void stop() {
         driver.quit();
+        driver.close();
         instance = null;
     }
 }
