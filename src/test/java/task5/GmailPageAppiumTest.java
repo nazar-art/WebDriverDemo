@@ -10,18 +10,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.appium.GmailAndroidPage;
 
 import java.net.URL;
 import java.util.List;
 
+
 public class GmailPageAppiumTest {
 
+    public static final String TEST_MESSAGE = "This is test message";
     private static Logger log = Logger.getLogger(GmailPageAppiumTest.class);
     private WebDriver driver = null;
     private GmailAndroidPage gmailAndroidPage;
 
-    public static final String LOGIN_URL = "https://accounts.google.com";
+    public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
 
     public static String USER_LOGIN = "testt3820@gmail.com";
     public static String USER_PASSWORD = "CreateAPassword";
@@ -35,6 +39,17 @@ public class GmailPageAppiumTest {
         capabilities.setCapability("platformVersion", "4.4.2");
 
         driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        //        login to gmail page
+        driver.get(LOGIN_URL);
+        driver.findElement(By.id("Email")).sendKeys(USER_LOGIN);
+        driver.findElement(By.id("Passwd")).sendKeys(USER_PASSWORD);
+        driver.findElement(By.id("signIn")).click();
+        (new WebDriverWait(driver, 60)).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                return d.getTitle().toLowerCase().contains("gmail");
+            }
+        });
     }
 
     @After
@@ -44,11 +59,12 @@ public class GmailPageAppiumTest {
 
     @Test
     public void DraftLinkAndroidTest() {
-//        Assert.assertTrue(driver.getCurrentUrl().contains("google"));
-        driver.get(LOGIN_URL);
-        driver.findElement(By.id("Email")).sendKeys(USER_LOGIN);
-        driver.findElement(By.id("Passwd")).sendKeys(USER_PASSWORD);
-        driver.findElement(By.id("signIn")).click();
+        // move to gmail page
+        driver.get("https://mail.google.com/mail/u/0/?tab=Xm&pli=1#inbox");
+
+        // write new message
+        driver.findElement(By.xpath("//div[@class = 'T-I J-J5-Ji T-I-KE L3']")).click();
+        driver.findElement(By.id(":6r")).sendKeys(TEST_MESSAGE);
 
     }
 
