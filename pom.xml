@@ -30,6 +30,17 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <!-- APPIUM REPO -->
+        <repository>
+            <id>saucelabs-repository</id>
+            <url>https://repository-saucelabs.forge.cloudbees.com/release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -88,6 +99,37 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>1.1.6</version>
+        </dependency>
+
+        <!-- APPIUM -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Includes the Sauce JUnit helper libraries -->
+        <dependency>
+            <groupId>com.saucelabs</groupId>
+            <artifactId>sauce_junit</artifactId>
+            <version>1.0.18</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
         </dependency>
     </dependencies>
 
