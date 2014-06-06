@@ -15,17 +15,17 @@ import static pages.utils.TestUtils.interrupt;
 
 public class GmailLoginPage extends BasePage {
 
-    public static volatile String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
-    public static volatile String XPATH_EXPRESSION = "//*[@id=':4e']/div/div";
+    public static String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
+    public static String XPATH_EXPRESSION = "//*[@id=':4e']/div/div";
 
     @FindBy(id = "Email")
-    private volatile TextField loginField;
+    private TextField loginField;
 
     @FindBy(id = "Passwd")
-    private volatile TextField passwordField;
+    private TextField passwordField;
 
     @FindBy(id = "signIn")
-    private volatile Button loginBtn;
+    private Button loginBtn;
 
     public GmailLoginPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);

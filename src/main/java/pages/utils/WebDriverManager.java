@@ -5,8 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 public class WebDriverManager {
@@ -41,6 +46,21 @@ public class WebDriverManager {
                         case IE: {
                             return instance = localInstance = new InternetExplorerDriver();
                         }
+
+                        case Android_Chrome: {
+                            try {
+                                DesiredCapabilities capabilities = new DesiredCapabilities();
+                                capabilities.setCapability(CapabilityType.BROWSER_NAME, "Browser");
+                                capabilities.setCapability("platformName", "Android");
+                                capabilities.setCapability("deviceName","Android Emulator");
+                                capabilities.setCapability("platformVersion", "4.4.2");
+
+                                return instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                            } catch (MalformedURLException e) {
+                                log.error(e);
+                            }
+                        }
+
                         default: {
                             throw new RuntimeException("Not supported browser type");
                         }

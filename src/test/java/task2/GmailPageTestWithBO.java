@@ -48,13 +48,7 @@ public class GmailPageTestWithBO {
         try {
             mainContentBO = new GmailMainContentBO();
             mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
-            /*mainContentBO.clickComposeBtn();
-            interrupt(SECONDS, 1);
-            mainContentBO.typeTextToNewLetter(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
-            interrupt(SECONDS, 1);
-            mainContentBO.clickSaveAndCloseBtn();
-            interrupt(SECONDS, 1);*/
-            //
+
             leftPanelBO = new GmailLeftPanelBO();
             leftPanelBO.clickDraftLink();
 

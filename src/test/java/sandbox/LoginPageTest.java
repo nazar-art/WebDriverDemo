@@ -54,7 +54,7 @@ public class LoginPageTest {
         UIButton signOutBtn = (UIButton) UIControlBuilder.buildControl(UIRepository.Pages.GmailMainPage.btnSignOut);
         signOutBtn.click();
         //
-        SeleniumManager.stop();
+        SeleniumManager.closeQuietly();
         pageManager = null;
     }
 
