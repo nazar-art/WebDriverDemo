@@ -1,19 +1,15 @@
-package pages.appium;
+package mobile.pages;
 
 import elements.Button;
 import elements.ElementDecorator;
 import elements.TextField;
-import framework.seleniumEngine.SeleniumManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.BrowserType;
 
-public class LoginAndroidPage {
-
-    private WebDriver driver = SeleniumManager.start(BrowserType.Android_Chrome);
+public class LoginAndroidPage extends AndroidBasePage {
 
     @FindBy(id = "Email")
     private TextField loginField;
