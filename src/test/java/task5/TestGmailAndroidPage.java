@@ -17,10 +17,10 @@ import java.net.URL;
 import java.util.List;
 
 
-public class GmailPageAppiumTest {
+public class TestGmailAndroidPage {
 
     public static final String TEST_MESSAGE = "This is test message";
-    private static Logger log = Logger.getLogger(GmailPageAppiumTest.class);
+    private static Logger log = Logger.getLogger(TestGmailAndroidPage.class);
     private WebDriver driver;
     private GmailAndroidBO androidBO;
 
