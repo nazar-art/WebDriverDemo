@@ -6,7 +6,7 @@
     4. Fill email message 
     5. Click "Save & Close"
     6. Click on “All Mail” link
-    7. Verify that "All mail" contains draft message
+    7. Verify that "Draft" folder contains draft message
 
 #task 2:
 
@@ -25,5 +25,5 @@
        
 #task 5:
     
-    Configure test logic with => Appium under Android platform
+    Configure test logic with => Appium framework under Android platform
 
