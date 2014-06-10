@@ -20,7 +20,7 @@ public class GmailAndroidBO {
     public List<WebElement> checkSavingDraftLetter(String msg) {
         androidPage.clickComposeBtn();
         androidPage.typeTextToMsg(msg);
-        androidPage.clickSaveAndCloseBtn();
+        androidPage.clickCloseMessageBtn();
         androidPage.clickDraftLink();
         // return all messages per page from draft folders
         return androidPage.takeAllMsgFromPage();

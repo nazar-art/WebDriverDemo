@@ -1,5 +1,6 @@
 package framework.seleniumEngine;
 
+import io.appium.java_client.AppiumDriver;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,7 +8,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import pages.utils.BrowserType;
 
 import java.net.MalformedURLException;
@@ -61,7 +61,7 @@ public class SeleniumManager {
                     capabilities.setCapability("deviceName","Android Emulator");
                     capabilities.setCapability("platformVersion", "4.4.2");
 
-                    return driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                    return driver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
                 } catch (MalformedURLException e) {
                     log.error(e);
                 }

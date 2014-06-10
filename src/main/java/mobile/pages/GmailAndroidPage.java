@@ -4,46 +4,50 @@ import elements.Button;
 import elements.ElementDecorator;
 import elements.Link;
 import elements.Menu;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
 public class GmailAndroidPage extends AndroidBasePage {
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@onclick=\\\"_e(event, 'sa')\\\"]")
     private Button composeBtn;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div/a[@id='gb_71']")
     private Link signOutLink;
 
-    @FindBy(xpath = "")
-    private WebElement frameMessageEditor;
+    @FindBy(xpath = "//div[@id='cmcbody']")
+    private WebElement newMessageEditor;
 
-    @FindBy(xpath = "")
-    private Button saveAndCloseBtn;
+    @FindBy(xpath = "//div[@class='M j T b hc Gs Ue']/div[@class='V j Y Gn Kh']")
+    private Button closeMsgBtn;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@onclick=\"_e(event, 'Sb','^r')\"]")
     private Link draftMessagesLink;
 
-    @FindBy(xpath = "")
-    private Link moreOptionsLink;
+    @FindBy(xpath = "//div[@onclick=\"_e(event, 'Ub','^smartlabel_personal')\"]")
+    private Link primaryLink;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//span[@class='gb_W gbii']")
     private Menu userOptionsDropDownMenu;
 
-    @FindAll({@FindBy(xpath = "")})
+    @FindAll({@FindBy(xpath = "//div//div[@class='Kh Cm']")})
     private WebElement allMessagesPerPage;
 
     public GmailAndroidPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
-//    todo finish page logic
-
     public void clickComposeBtn() {
+//        primaryLink.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@onclick=\\\"_e(event, 'sa')\\\"]")));
         composeBtn.click();
     }
 
@@ -52,15 +56,19 @@ public class GmailAndroidPage extends AndroidBasePage {
     }
 
     public void typeTextToMsg(String msg) {
-        // todo
+        primaryLink.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@onclick=\\\"_e(event, 'sa')\\\"]")));
+        composeBtn.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@id='cmcbody']")));
+        newMessageEditor.sendKeys(msg);
     }
 
-    @SuppressWarnings("uncheckeed")
+    @SuppressWarnings("unchecked")
     public List<WebElement> takeAllMsgFromPage() {
         return (List<WebElement>) allMessagesPerPage;
     }
 
-    public void clickSaveAndCloseBtn() {
-        saveAndCloseBtn.click();
+    public void clickCloseMessageBtn() {
+        closeMsgBtn.click();
     }
 }
