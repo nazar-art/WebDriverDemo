@@ -41,7 +41,7 @@ public class GmailAndroidPage extends AndroidBasePage {
     @FindBy(xpath = "//div[starts-with(@class, 'V j Ld')]")
     private Button optionsBtn;
 
-    @FindAll({@FindBy(xpath = "//div//div[@class='Kh Cm']")})
+    @FindAll({ @FindBy(xpath = "//div//div[@class='Kh Cm']") })
     private List<WebElement> allMessagesPerPage;
 
     public GmailAndroidPage() {
@@ -58,6 +58,7 @@ public class GmailAndroidPage extends AndroidBasePage {
         optionsBtn.click();
         new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")));
         draftMessagesLink.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div//div[@class='Kh Cm']")));
     }
 
     public void typeTextToMsg(String msg) {
