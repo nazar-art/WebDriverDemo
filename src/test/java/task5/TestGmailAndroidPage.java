@@ -47,6 +47,7 @@ public class TestGmailAndroidPage {
     public void DraftLinkAndroidTest() {
         List<WebElement> draftLetters = androidBO.checkSavingDraftLetter(TEST_MESSAGE);
         Assert.assertTrue(letterContainsTextMessage(draftLetters, TEST_MESSAGE));
+        log.info("DraftLinkAndroidTest() was passed successfully");
     }
 
     /**
