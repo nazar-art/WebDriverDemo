@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -58,15 +57,11 @@ public class TestGmailAndroidPage {
      * @return if letter contain message true, otherwise false.
      */
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
-        try {
             for (WebElement element : webElementList) {
                 if (element.getText().contains(message)) {
                     return true;
                 }
             }
-        } catch (StaleElementReferenceException e) {
-            log.error(e);
-        }
         return false;
     }
 
