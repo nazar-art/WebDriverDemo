@@ -20,7 +20,7 @@ public class TestGmailAndroidPage {
 
     public static final String TEST_MESSAGE = "This is test message";
     private static Logger log = Logger.getLogger(TestGmailAndroidPage.class);
-    private WebDriver driver = SeleniumManager.getInstance().start(BrowserType.Android_Chrome);
+    private WebDriver driver = SeleniumManager.start(BrowserType.Android_Chrome);
     private GmailAndroidBO androidBO;
 
     public static final String LOGIN_URL = "https://accounts.google.com/ServiceLogin?sacu=1&scc=1&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&hl=uk&service=mail";
