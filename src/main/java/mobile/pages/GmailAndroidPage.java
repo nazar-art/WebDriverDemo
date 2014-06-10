@@ -17,7 +17,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 public class GmailAndroidPage extends AndroidBasePage {
 
-    @FindBy(xpath = "//div[@onclick=\\\"_e(event, 'sa')\\\"]")
+    @FindBy(xpath = "//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")
     private Button composeBtn;
 
     @FindBy(xpath = "//div/a[@id='gb_71']")
@@ -29,7 +29,7 @@ public class GmailAndroidPage extends AndroidBasePage {
     @FindBy(xpath = "//div[@class='M j T b hc Gs Ue']/div[@class='V j Y Gn Kh']")
     private Button closeMsgBtn;
 
-    @FindBy(xpath = "//div[@onclick=\"_e(event, 'Sb','^r')\"]")
+    @FindBy(xpath = "//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")
     private Link draftMessagesLink;
 
     @FindBy(xpath = "//div[@onclick=\"_e(event, 'Ub','^smartlabel_personal')\"]")
@@ -37,6 +37,9 @@ public class GmailAndroidPage extends AndroidBasePage {
 
     @FindBy(xpath = "//span[@class='gb_W gbii']")
     private Menu userOptionsDropDownMenu;
+
+    @FindBy(xpath = "//div[starts-with(@class, 'V j Ld')]")
+    private Button optionsBtn;
 
     @FindAll({@FindBy(xpath = "//div//div[@class='Kh Cm']")})
     private WebElement allMessagesPerPage;
@@ -46,20 +49,21 @@ public class GmailAndroidPage extends AndroidBasePage {
     }
 
     public void clickComposeBtn() {
-//        primaryLink.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@onclick=\\\"_e(event, 'sa')\\\"]")));
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")));
         composeBtn.click();
     }
 
     public void clickDraftLink() {
+        optionsBtn.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")));
         draftMessagesLink.click();
     }
 
     public void typeTextToMsg(String msg) {
-        primaryLink.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@onclick=\\\"_e(event, 'sa')\\\"]")));
-        composeBtn.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@id='cmcbody']")));
+//        primaryLink.click();
+//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")));
+//        composeBtn.click();
+//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@id='cmcbody']")));
         newMessageEditor.sendKeys(msg);
     }
 
