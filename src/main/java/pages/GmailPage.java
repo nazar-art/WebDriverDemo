@@ -50,7 +50,7 @@ public class GmailPage extends BasePage {
     private Menu userOptionsDropDownMenu;
 
     @FindAll({@FindBy(xpath = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]")})
-    private WebElement allMessagesPerPage;
+    private List<WebElement> allMessagesPerPage;
 
     public GmailPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);

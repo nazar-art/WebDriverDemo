@@ -22,8 +22,12 @@ public class GmailAndroidBO {
         androidPage.typeTextToMsg(msg);
         androidPage.clickCloseMessageBtn();
         androidPage.clickDraftLink();
-        // return all messages per page from draft folders
+        // return all messages per page from draft folder
         return androidPage.takeAllMsgFromPage();
+    }
+
+    public void logOut() {
+        androidPage.logOutUser();
     }
 }
 

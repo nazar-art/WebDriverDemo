@@ -32,17 +32,17 @@ public class GmailAndroidPage extends AndroidBasePage {
     @FindBy(xpath = "//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")
     private Link draftMessagesLink;
 
-    @FindBy(xpath = "//div[@onclick=\"_e(event, 'Ub','^smartlabel_personal')\"]")
-    private Link primaryLink;
+    @FindBy(xpath = "//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]")
+    private Link saveLetter;
 
     @FindBy(xpath = "//span[@class='gb_W gbii']")
-    private Menu userOptionsDropDownMenu;
+    private Menu userOptionsMenu;
 
     @FindBy(xpath = "//div[starts-with(@class, 'V j Ld')]")
     private Button optionsBtn;
 
     @FindAll({@FindBy(xpath = "//div//div[@class='Kh Cm']")})
-    private WebElement allMessagesPerPage;
+    private List<WebElement> allMessagesPerPage;
 
     public GmailAndroidPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
@@ -54,25 +54,31 @@ public class GmailAndroidPage extends AndroidBasePage {
     }
 
     public void clickDraftLink() {
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'V j Ld')]")));
         optionsBtn.click();
         new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")));
         draftMessagesLink.click();
     }
 
     public void typeTextToMsg(String msg) {
-//        primaryLink.click();
-//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")));
-//        composeBtn.click();
-//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@id='cmcbody']")));
         newMessageEditor.sendKeys(msg);
     }
 
     @SuppressWarnings("unchecked")
     public List<WebElement> takeAllMsgFromPage() {
-        return (List<WebElement>) allMessagesPerPage;
+        return allMessagesPerPage;
     }
 
     public void clickCloseMessageBtn() {
         closeMsgBtn.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]")));
+        saveLetter.click();
+    }
+
+    public void logOutUser() {
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//span[@class='gb_W gbii']")));
+        userOptionsMenu.click();
+        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div/a[@id='gb_71']")));
+        signOutLink.click();
     }
 }
