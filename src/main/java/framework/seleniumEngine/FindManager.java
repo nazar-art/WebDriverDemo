@@ -2,6 +2,7 @@ package framework.seleniumEngine;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utilities.drivers.SeleniumManager;
 
 /**
  * @author Nazar Lelyak.

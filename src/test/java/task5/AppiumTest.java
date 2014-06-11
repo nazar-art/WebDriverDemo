@@ -1,6 +1,6 @@
 package task5;
 
-import framework.seleniumEngine.SeleniumManager;
+import utilities.drivers.SeleniumManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

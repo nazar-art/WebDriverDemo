@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import utilities.DriverPool;
+import utilities.drivers.DriverPool;
 
 import java.util.List;
 

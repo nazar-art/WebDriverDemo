@@ -6,7 +6,7 @@ import framework.UIElements.UIInputText;
 import framework.UIElements.UIMenu;
 import framework.pages.GmailMainPage;
 import framework.seleniumEngine.PageManager;
-import framework.seleniumEngine.SeleniumManager;
+import utilities.drivers.SeleniumManager;
 import framework.seleniumEngine.UIRepository;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;

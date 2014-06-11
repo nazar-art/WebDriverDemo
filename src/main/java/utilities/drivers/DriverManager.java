@@ -1,4 +1,4 @@
-package utilities;
+package utilities.drivers;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -19,31 +19,31 @@ public class DriverManager {
 
     private static Logger log = Logger.getLogger(DriverManager.class);
 
-    private static volatile WebDriver instance;
+    private static volatile WebDriver driverInstance;
 
     private DriverManager() {
     }
 
     public static synchronized WebDriver getInstance() {
-        if (instance == null) {
+        if (driverInstance == null) {
             switch (readBrowserType()) {
                 case Firefox: {
-                    instance = new FirefoxDriver();
-                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                    return instance;
+                    driverInstance = new FirefoxDriver();
+                    driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return driverInstance;
                 }
 
                 case Chrome: {
                     System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-                    instance = new ChromeDriver();
-                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                    return instance;
+                    driverInstance = new ChromeDriver();
+                    driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return driverInstance;
                 }
 
                 case IE: {
-                    instance = new InternetExplorerDriver();
-                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                    return instance;
+                    driverInstance = new InternetExplorerDriver();
+                    driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return driverInstance;
                 }
 
                 case Android_Chrome: {
@@ -54,9 +54,9 @@ public class DriverManager {
                         capabilities.setCapability("deviceName","Android Emulator");
                         capabilities.setCapability("platformVersion", "4.4.2");
 
-                        instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-                        instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                        return instance;
+                        driverInstance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                        driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                        return driverInstance;
                     } catch (MalformedURLException e) {
                         log.error(e);
                     }
@@ -67,13 +67,13 @@ public class DriverManager {
                 }
             }
         }
-        return instance;
+        return driverInstance;
     }
 
     public static void closeQuietly() {
-        if (instance != null) {
-            instance.quit();
-            instance = null;
+        if (driverInstance != null) {
+            driverInstance.quit();
+            driverInstance = null;
         }
     }
 }

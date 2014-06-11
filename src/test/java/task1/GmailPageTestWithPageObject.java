@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.GmailPage;
-import utilities.DriverManager;
+import utilities.drivers.DriverManager;
 import utilities.TestUtils;
 
 import java.util.List;

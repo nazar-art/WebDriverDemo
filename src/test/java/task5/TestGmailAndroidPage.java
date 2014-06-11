@@ -1,6 +1,6 @@
 package task5;
 
-import framework.seleniumEngine.SeleniumManager;
+import utilities.drivers.SeleniumManager;
 import mobile.business.GmailAndroidBO;
 import mobile.business.LoginAndroidBO;
 import org.apache.log4j.Logger;

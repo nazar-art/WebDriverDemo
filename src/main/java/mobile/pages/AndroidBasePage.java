@@ -1,6 +1,6 @@
 package mobile.pages;
 
-import framework.seleniumEngine.SeleniumManager;
+import utilities.drivers.SeleniumManager;
 import org.openqa.selenium.WebDriver;
 import pages.IPage;
 

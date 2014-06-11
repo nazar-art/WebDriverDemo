@@ -25,7 +25,7 @@ public class GmailPage extends BasePage {
     @FindBy(xpath = "//div[@class='T-I J-J5-Ji T-I-KE L3']")
     private Button composeBtn;
 
-    @FindBy(css = "#gb_71")
+    @FindBy(xpath = "//div[@class='gb_ha']//a[contains(text(), 'Sign')]")
     private Link signOutLink;
 
     @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
@@ -46,7 +46,7 @@ public class GmailPage extends BasePage {
     @FindBy(xpath = "//*[@title='All Mail']")
     private Link allMailLink;
 
-    @FindBy(css = ".gb_0")
+    @FindBy(xpath = "//a[@class='gb_y gb_4 gb_e']/span[@class='gb_W gbii']")
     private Menu userOptionsDropDownMenu;
 
     @FindAll({@FindBy(xpath = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]")})
