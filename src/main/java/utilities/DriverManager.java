@@ -1,4 +1,4 @@
-package pages.utils;
+package utilities;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -9,42 +9,46 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
-public class WebDriverManager {
+import static utilities.ProrpertiesFileHandler.readBrowserType;
 
-    private static Logger log = Logger.getLogger(WebDriverManager.class);
+public class DriverManager {
 
-    public static final String CONFIG_PROPERTIES = "src/main/resources/config.properties";
-    public static final String KEY = "browser.type";
+    private static Logger log = Logger.getLogger(DriverManager.class);
 
     private static volatile WebDriver instance = null;
 
-    private WebDriverManager() {
+    private DriverManager() {
     }
 
     public static WebDriver getInstance() {
         WebDriver localInstance = instance;
 
         if (localInstance == null) {
-            synchronized (WebDriverManager.class) {
+            synchronized (DriverManager.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     switch (readBrowserType()) {
                         case Firefox: {
-                            return instance = localInstance = new FirefoxDriver();
+                            instance = localInstance = new FirefoxDriver();
+                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                            return instance;
                         }
 
                         case Chrome: {
                             System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-                            return instance = localInstance = new ChromeDriver();
+                            instance = localInstance = new ChromeDriver();
+                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                            return instance;
                         }
 
                         case IE: {
-                            return instance = localInstance = new InternetExplorerDriver();
+                            instance = localInstance = new InternetExplorerDriver();
+                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                            return instance;
                         }
 
                         case Android_Chrome: {
@@ -55,7 +59,9 @@ public class WebDriverManager {
                                 capabilities.setCapability("deviceName","Android Emulator");
                                 capabilities.setCapability("platformVersion", "4.4.2");
 
-                                return instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                                instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                                instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                                return instance;
                             } catch (MalformedURLException e) {
                                 log.error(e);
                             }
@@ -69,24 +75,6 @@ public class WebDriverManager {
             }
         }
         return localInstance;
-    }
-
-    public static BrowserType readBrowserType() {
-        BrowserType browserType = null;
-        Properties properties = new Properties();
-        try {
-            InputStream inputStream = new FileInputStream(CONFIG_PROPERTIES);
-
-            properties.load(inputStream);
-            browserType = Enum.valueOf(BrowserType.class, properties.getProperty(KEY));
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            log.error("Properties file wasn't found - " + e);
-        } catch (IOException e) {
-            log.error("Problem with reading properties file - " + e);
-        }
-
-        return browserType;
     }
 
     public static void closeQuietly() {

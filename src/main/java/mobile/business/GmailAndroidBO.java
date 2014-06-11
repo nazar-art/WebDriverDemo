@@ -7,17 +7,13 @@ import java.util.List;
 
 public class GmailAndroidBO {
 
-    private GmailAndroidPage androidPage;
-
-    public GmailAndroidBO() {
-        androidPage = new GmailAndroidPage();
-    }
-
     public void clickComposeBtn() {
+        GmailAndroidPage androidPage = new GmailAndroidPage();
         androidPage.clickComposeBtn();
     }
 
     public List<WebElement> checkSavingDraftLetter(String msg) {
+        GmailAndroidPage androidPage = new GmailAndroidPage();
         androidPage.clickComposeBtn();
         androidPage.typeTextToMsg(msg);
         androidPage.clickCloseMessageBtn();
@@ -27,6 +23,7 @@ public class GmailAndroidBO {
     }
 
     public void logOut() {
+        GmailAndroidPage androidPage = new GmailAndroidPage();
         androidPage.logOutUser();
     }
 }

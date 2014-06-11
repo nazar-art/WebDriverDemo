@@ -11,14 +11,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.TestUtils;
+import utilities.TestUtils;
 
 import java.util.Collections;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class GmailPage extends BasePage {
 

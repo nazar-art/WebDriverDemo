@@ -12,8 +12,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
 import pages.GmailPage;
-import pages.utils.TestUtils;
-import pages.utils.WebDriverManager;
+import utilities.DriverManager;
+import utilities.TestUtils;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class GmailPageTestWithPageObject {
 
     private static Logger log = Logger.getLogger(GmailPageTestWithPageObject.class);
 
-    private WebDriver driver = WebDriverManager.getInstance();
+    private WebDriver driver = DriverManager.getInstance();
     private GmailPage page = null;
 
     public static String USER_LOGIN = "testt3820@gmail.com";
@@ -77,7 +77,7 @@ public class GmailPageTestWithPageObject {
             log.error("GmailPageClassTest - tearDown() fail", e);
             Assert.fail("GmailPageClassTest - tearDown() fail", e.getCause());
         } finally {
-            WebDriverManager.closeQuietly();
+            DriverManager.closeQuietly();
         }
     }
 

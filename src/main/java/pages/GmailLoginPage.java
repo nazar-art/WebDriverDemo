@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class GmailLoginPage extends BasePage {
 

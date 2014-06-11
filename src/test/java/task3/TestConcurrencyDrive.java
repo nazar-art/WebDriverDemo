@@ -12,14 +12,14 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.utils.DriverPool;
+import utilities.DriverPool;
 
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class TestConcurrencyDrive {
 

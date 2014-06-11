@@ -12,8 +12,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.utils.TestUtils;
-import pages.utils.WebDriverManager;
+import utilities.DriverManager;
+import utilities.TestUtils;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class GmailPageTestWithBO {
 
     private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
 
-    private WebDriver driver = WebDriverManager.getInstance();
+    private WebDriver driver = DriverManager.getInstance();
     private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
@@ -71,7 +71,7 @@ public class GmailPageTestWithBO {
             log.error("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e);
             Assert.fail("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e.getCause());
         } finally {
-            WebDriverManager.closeQuietly();
+            DriverManager.closeQuietly();
         }
     }
 

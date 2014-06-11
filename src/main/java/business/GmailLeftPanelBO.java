@@ -4,13 +4,8 @@ import pages.GmailPage;
 
 public class GmailLeftPanelBO {
 
-    private GmailPage gmailPage;
-
-    public GmailLeftPanelBO() {
-        gmailPage = new GmailPage();
-    }
-
     public void clickDraftLink() {
+        GmailPage gmailPage = new GmailPage();
         gmailPage.clickDraftLink();
     }
 

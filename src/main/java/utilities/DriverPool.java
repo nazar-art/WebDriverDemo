@@ -1,4 +1,4 @@
-package pages.utils;
+package utilities;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

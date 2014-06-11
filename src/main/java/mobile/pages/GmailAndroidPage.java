@@ -65,7 +65,6 @@ public class GmailAndroidPage extends AndroidBasePage {
         newMessageEditor.sendKeys(msg);
     }
 
-    @SuppressWarnings("unchecked")
     public List<WebElement> takeAllMsgFromPage() {
         return allMessagesPerPage;
     }

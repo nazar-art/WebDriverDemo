@@ -1,6 +1,5 @@
 package framework.seleniumEngine;
 
-import io.appium.java_client.AppiumDriver;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,19 +7,21 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import pages.utils.BrowserType;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import utilities.BrowserType;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
 public class SeleniumManager {
 
-    private static WebDriver driver = null;
-
-    private static volatile SeleniumManager instance = null;
-
     private static Logger log = Logger.getLogger(SeleniumManager.class);
+
+    private static volatile SeleniumManager instance = new SeleniumManager();
+
+    private static WebDriver driver = null;
 
     // private constructor
     private SeleniumManager() {
@@ -37,20 +38,25 @@ public class SeleniumManager {
         return driver;
     }
 
-
     public static WebDriver start(BrowserType browserType) {
         switch (browserType) {
             case Firefox: {
-                return driver = new FirefoxDriver();
+                driver = new FirefoxDriver();
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                return driver;
             }
 
             case Chrome: {
                 System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-                return driver = new ChromeDriver();
+                driver = new ChromeDriver();
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                return driver;
             }
 
             case IE: {
-                return driver = new InternetExplorerDriver();
+                driver = new InternetExplorerDriver();
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                return driver;
             }
 
             case Android_Chrome: {
@@ -61,7 +67,9 @@ public class SeleniumManager {
                     capabilities.setCapability("deviceName","Android Emulator");
                     capabilities.setCapability("platformVersion", "4.4.2");
 
-                    return driver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                    driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                    driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return driver;
                 } catch (MalformedURLException e) {
                     log.error(e);
                 }
@@ -76,6 +84,5 @@ public class SeleniumManager {
     public static void closeQuietly() {
         driver.quit();
 //        driver.close();
-        instance = null;
     }
 }

@@ -1,4 +1,4 @@
-package pages.utils;
+package utilities;
 
 public enum BrowserType {
     Android_Chrome,
