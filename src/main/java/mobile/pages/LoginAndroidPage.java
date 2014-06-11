@@ -25,7 +25,6 @@ public class LoginAndroidPage extends AndroidBasePage {
     }
 
     public GmailAndroidPage loginAs(String userName, String userPass) {
-//        driver.get(LOGIN_URL);
         loginField.typeText(userName);
         passwordField.typeText(userPass);
         loginBtn.click();

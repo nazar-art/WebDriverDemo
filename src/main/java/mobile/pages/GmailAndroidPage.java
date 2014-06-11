@@ -4,16 +4,12 @@ import elements.Button;
 import elements.ElementDecorator;
 import elements.Link;
 import elements.Menu;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class GmailAndroidPage extends AndroidBasePage {
 
@@ -49,16 +45,14 @@ public class GmailAndroidPage extends AndroidBasePage {
     }
 
     public void clickComposeBtn() {
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")));
+//        waitPresence("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]");
         composeBtn.click();
     }
 
     public void clickDraftLink() {
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[starts-with(@class, 'V j Ld')]")));
         optionsBtn.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")));
         draftMessagesLink.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div//div[@class='Kh Cm']")));
+        waitPresence("//div//div[@class='Kh Cm']");
     }
 
     public void typeTextToMsg(String msg) {
@@ -71,14 +65,14 @@ public class GmailAndroidPage extends AndroidBasePage {
 
     public void clickCloseMessageBtn() {
         closeMsgBtn.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]")));
+        waitPresence("//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]");
         saveLetter.click();
     }
 
     public void logOutUser() {
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//span[@class='gb_W gbii']")));
+        waitPresence("//span[@class='gb_W gbii']");
         userOptionsMenu.click();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div/a[@id='gb_71']")));
+        waitPresence("//div/a[@id='gb_71']");
         signOutLink.click();
     }
 }
