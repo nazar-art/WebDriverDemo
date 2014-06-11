@@ -12,19 +12,36 @@ public class GmailAndroidBO {
         androidPage.clickComposeBtn();
     }
 
-    public List<WebElement> checkSavingDraftLetter(String msg) {
+    public boolean checkSavingDraftLetter(String msg) {
         GmailAndroidPage androidPage = new GmailAndroidPage();
         androidPage.clickComposeBtn();
         androidPage.typeTextToMsg(msg);
         androidPage.clickCloseMessageBtn();
         androidPage.clickDraftLink();
-        // return all messages per page from draft folder
-        return androidPage.takeAllMsgFromPage();
+
+        List<WebElement> draftLetters = androidPage.takeAllMsgFromPage();
+        return letterContainsTextMessage(draftLetters, msg);
     }
 
     public void logOut() {
         GmailAndroidPage androidPage = new GmailAndroidPage();
         androidPage.logOutUser();
+    }
+
+    /**
+     * Check if list of letters from page contains text message.
+     *
+     * @param webElementList list of web elements.
+     * @param message        test message.
+     * @return if letter contain message true, otherwise false.
+     */
+    public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
+        for (WebElement element : webElementList) {
+            if (element.getText().contains(message)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

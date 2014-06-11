@@ -63,16 +63,7 @@ public class GmailPageTestWithBO {
 
     @AfterTest
     public void tearDown() {
-        try {
-            headerPanelBO = new GmailHeaderPanelBO();
-            headerPanelBO.clickProfileOptionMenu();
-            headerPanelBO.clickSignOutBtn();
-        } catch (Exception e) {
-            log.error("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e);
-            Assert.fail("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e.getCause());
-        } finally {
-            DriverManager.closeQuietly();
-        }
+        DriverManager.closeQuietly();
     }
 
     /**

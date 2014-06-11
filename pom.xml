@@ -155,9 +155,9 @@
                         </dependencies>
 
                         <configuration>
-                            <!--<suiteXmlFiles>
+                            <suiteXmlFiles>
                                 <suiteXmlFile>src/main/resources/concurrent-suite.xml</suiteXmlFile>
-                            </suiteXmlFiles>-->
+                            </suiteXmlFiles>
                             <systemPropertyVariables>
                                 <selenium-version>${selenium-version}</selenium-version>
                                 <browser>browser-other</browser>

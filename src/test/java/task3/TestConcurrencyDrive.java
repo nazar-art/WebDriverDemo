@@ -25,7 +25,6 @@ public class TestConcurrencyDrive {
 
     private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
-    //    private WebDriver driver = DriverPool.getDriver();
     private WebDriver driver = DriverPool.getDriver();
 
     private GmailHeaderPanelBO headerPanelBO;
@@ -81,7 +80,6 @@ public class TestConcurrencyDrive {
             fail("Error at tearDown() ", e.getCause());
         } finally {
             DriverPool.closeDriver();
-//            WebDriverManager.closeQuietly();
         }
     }
 

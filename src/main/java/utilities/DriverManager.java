@@ -19,62 +19,55 @@ public class DriverManager {
 
     private static Logger log = Logger.getLogger(DriverManager.class);
 
-    private static volatile WebDriver instance = null;
+    private static volatile WebDriver instance;
 
     private DriverManager() {
     }
 
-    public static WebDriver getInstance() {
-        WebDriver localInstance = instance;
+    public static synchronized WebDriver getInstance() {
+        if (instance == null) {
+            switch (readBrowserType()) {
+                case Firefox: {
+                    instance = new FirefoxDriver();
+                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return instance;
+                }
 
-        if (localInstance == null) {
-            synchronized (DriverManager.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    switch (readBrowserType()) {
-                        case Firefox: {
-                            instance = localInstance = new FirefoxDriver();
-                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                            return instance;
-                        }
+                case Chrome: {
+                    System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
+                    instance = new ChromeDriver();
+                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return instance;
+                }
 
-                        case Chrome: {
-                            System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
-                            instance = localInstance = new ChromeDriver();
-                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                            return instance;
-                        }
+                case IE: {
+                    instance = new InternetExplorerDriver();
+                    instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    return instance;
+                }
 
-                        case IE: {
-                            instance = localInstance = new InternetExplorerDriver();
-                            instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                            return instance;
-                        }
+                case Android_Chrome: {
+                    try {
+                        DesiredCapabilities capabilities = new DesiredCapabilities();
+                        capabilities.setCapability(CapabilityType.BROWSER_NAME, "Browser");
+                        capabilities.setCapability("platformName", "Android");
+                        capabilities.setCapability("deviceName","Android Emulator");
+                        capabilities.setCapability("platformVersion", "4.4.2");
 
-                        case Android_Chrome: {
-                            try {
-                                DesiredCapabilities capabilities = new DesiredCapabilities();
-                                capabilities.setCapability(CapabilityType.BROWSER_NAME, "Browser");
-                                capabilities.setCapability("platformName", "Android");
-                                capabilities.setCapability("deviceName","Android Emulator");
-                                capabilities.setCapability("platformVersion", "4.4.2");
-
-                                instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-                                instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                                return instance;
-                            } catch (MalformedURLException e) {
-                                log.error(e);
-                            }
-                        }
-
-                        default: {
-                            throw new RuntimeException("Not supported browser type");
-                        }
+                        instance = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+                        instance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                        return instance;
+                    } catch (MalformedURLException e) {
+                        log.error(e);
                     }
+                }
+
+                default: {
+                    throw new RuntimeException("Not supported browser type");
                 }
             }
         }
-        return localInstance;
+        return instance;
     }
 
     public static void closeQuietly() {

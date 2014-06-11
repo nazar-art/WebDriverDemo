@@ -8,11 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import utilities.BrowserType;
-
-import java.util.List;
 
 
 public class TestGmailAndroidPage {
@@ -38,31 +35,13 @@ public class TestGmailAndroidPage {
 
     @After
     public void tearDown() throws Exception {
-//        androidBO.logOut();
         SeleniumManager.closeQuietly();
     }
 
     @Test
     public void DraftLinkAndroidTest() {
-        List<WebElement> draftLetters = androidBO.checkSavingDraftLetter(TEST_MESSAGE);
-        Assert.assertTrue(letterContainsTextMessage(draftLetters, TEST_MESSAGE));
-        log.info("DraftLinkAndroidTest() was passed successfully");
-    }
-
-    /**
-     * Check if list of letters from page contains text message.
-     *
-     * @param webElementList list of web elements.
-     * @param message        test message.
-     * @return if letter contain message true, otherwise false.
-     */
-    public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
-            for (WebElement element : webElementList) {
-                if (element.getText().contains(message)) {
-                    return true;
-                }
-            }
-        return false;
+        Assert.assertTrue(androidBO.checkSavingDraftLetter(TEST_MESSAGE));
+        log.info("DraftLinkAndroidTest() passed successfully");
     }
 
 }
