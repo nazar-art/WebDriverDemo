@@ -3,6 +3,7 @@ package pages;
 import elements.Button;
 import elements.ElementDecorator;
 import elements.TextField;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -29,7 +30,8 @@ public class GmailLoginPage extends BasePage {
         passwordField.typeText(userPass);
         loginBtn.click();
 
-        waitPresence("/html/head/title[contains(text(), 'Gmail')]");
+//        waitPresence("/html/head/title[contains(text(), 'Gmail')]");
+        fluentWait(By.xpath("/html/head/title[contains(text(), 'Gmail')]"));
         return new GmailPage();
     }
 
