@@ -45,7 +45,6 @@ public class GmailAndroidPage extends AndroidBasePage {
     }
 
     public void clickComposeBtn() {
-//        waitPresence("//div[starts-with(@class, 'M j T b hc Fn Pn Re')]");
         composeBtn.click();
     }
 

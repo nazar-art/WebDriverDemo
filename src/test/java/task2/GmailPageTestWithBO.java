@@ -75,14 +75,8 @@ public class GmailPageTestWithBO {
      */
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
         for (WebElement element : webElementList) {
-            String fullLetterText = element.getText().trim();
-//            System.out.printf("full: %s%n", fullLetterText);
-            if (fullLetterText.startsWith("-")) {
-                String letterText = fullLetterText.substring(2);
-//                System.out.printf("short: %s%n", letterText);
-                if (letterText.equals(message)) {
-                    return true;
-                }
+            if (element.getText().contains(message)) {
+                return true;
             }
         }
         return false;

@@ -8,7 +8,7 @@ import utilities.drivers.DriverManager;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class BasePage implements IPage {
+public abstract class BasePage implements IPage {
 
     public static final int WAIT_TIME = 30;
 

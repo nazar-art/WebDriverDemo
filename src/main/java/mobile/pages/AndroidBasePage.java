@@ -9,7 +9,7 @@ import pages.IPage;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class AndroidBasePage implements IPage {
+public abstract class AndroidBasePage implements IPage {
 
     public static final int WAIT_TIME = 30;
 
