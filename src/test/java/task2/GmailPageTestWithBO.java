@@ -1,6 +1,5 @@
 package task2;
 
-import business.GmailHeaderPanelBO;
 import business.GmailLeftPanelBO;
 import business.GmailMainContentBO;
 import business.LoginBO;
@@ -12,8 +11,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import utilities.drivers.DriverManager;
 import utilities.TestUtils;
+import utilities.drivers.DriverManager;
 
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class GmailPageTestWithBO {
     private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
 
     private WebDriver driver = DriverManager.getInstance();
-    private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
     private GmailLeftPanelBO leftPanelBO;

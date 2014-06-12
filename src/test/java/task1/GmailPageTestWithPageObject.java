@@ -27,7 +27,7 @@ public class GmailPageTestWithPageObject {
     @BeforeTest
     public void setUp() {
         driver.get(GmailLoginPage.LOGIN_URL);
-//        driver.manage().window().maximize();
+        driver.manage().window().maximize();
         GmailLoginPage loginPage = new GmailLoginPage();
         page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
     }
