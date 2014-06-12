@@ -48,12 +48,11 @@ public abstract class BasePage implements IPage {
                 .pollingEvery(5, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+        return wait.until(new Function<WebDriver, WebElement>() {
+            @Override
             public WebElement apply(WebDriver driver) {
                 return driver.findElement(locator);
             }
         });
-
-        return element;
     }
 }

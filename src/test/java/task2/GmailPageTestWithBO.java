@@ -30,33 +30,23 @@ public class GmailPageTestWithBO {
 
     @BeforeTest
     public void setUp() {
-        try {
-            driver.get(GmailLoginPage.LOGIN_URL);
-            driver.manage().window().maximize();
-            loginBO = new LoginBO();
-            loginBO.login(USER_LOGIN, USER_PASSWORD);
-        } catch (Exception e) {
-            log.error("setUp() for GmailPageTestWithBO fail, more details - ", e);
-            Assert.fail("setUp() for GmailPageTestWithBO fail, more details - ", e.getCause());
-        }
+        driver.get(GmailLoginPage.LOGIN_URL);
+        driver.manage().window().maximize();
+        loginBO = new LoginBO();
+        loginBO.login(USER_LOGIN, USER_PASSWORD);
     }
 
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
-        try {
-            mainContentBO = new GmailMainContentBO();
-            mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+        mainContentBO = new GmailMainContentBO();
+        mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
 
-            leftPanelBO = new GmailLeftPanelBO();
-            leftPanelBO.clickDraftLink();
+        leftPanelBO = new GmailLeftPanelBO();
+        leftPanelBO.clickDraftLink();
 
-            List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
-            Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
-                    "any letter doesn't contain test message");
-        } catch (Exception e) {
-            log.error("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
-            Assert.fail("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
-        }
+        List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
+        Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
+                "any letter doesn't contain test message");
     }
 
     @AfterTest
