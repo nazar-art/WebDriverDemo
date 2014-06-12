@@ -3,15 +3,8 @@ package pages;
 import elements.Button;
 import elements.ElementDecorator;
 import elements.TextField;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
-
-import static utilities.TestUtils.interrupt;
 
 public class GmailLoginPage extends BasePage {
 
@@ -36,34 +29,19 @@ public class GmailLoginPage extends BasePage {
         passwordField.typeText(userPass);
         loginBtn.click();
 
-        (new WebDriverWait(driver, 60)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().contains("gmail");
-            }
-        });
-
+        waitPresence("/html/head/title[contains(text(), 'Gmail')]");
         return new GmailPage();
     }
 
     public void setLogin(String userLogin) {
-//        loginField.clear();
         loginField.typeText(userLogin);
     }
 
     public void setPassword(String userPass) {
-//        passwordField.clear();
         passwordField.typeText(userPass);
     }
 
     public void clickLoginBtn() {
         loginBtn.click();
-        interrupt(TimeUnit.SECONDS, 1);
-        /*(new WebDriverWait(driver, 30)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath(XPATH_EXPRESSION)).isEnabled();
-            }
-        });*/
     }
 }

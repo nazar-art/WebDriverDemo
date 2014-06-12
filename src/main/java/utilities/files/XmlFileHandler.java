@@ -1,4 +1,4 @@
-package utilities;
+package utilities.files;
 
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
