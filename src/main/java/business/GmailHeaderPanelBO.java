@@ -4,17 +4,13 @@ import pages.GmailPage;
 
 public class GmailHeaderPanelBO {
 
-    private GmailPage gmailPage;
-
-    public GmailHeaderPanelBO() {
-        gmailPage = new GmailPage();
-    }
-
     public void clickProfileOptionMenu() {
+        GmailPage gmailPage = new GmailPage();
         gmailPage.clickProfileOptionMenu();
     }
 
     public void clickSignOutBtn() {
+        GmailPage gmailPage = new GmailPage();
         gmailPage.clickSignOut();
     }
 }

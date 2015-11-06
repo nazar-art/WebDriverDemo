@@ -12,20 +12,19 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.utils.DriverPool;
+import utilities.drivers.DriverPool;
 
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class TestConcurrencyDrive {
 
     private static final Logger log = Logger.getLogger(TestConcurrencyDrive.class);
 
-    //    private WebDriver driver = DriverPool.getDriver();
     private WebDriver driver = DriverPool.getDriver();
 
     private GmailHeaderPanelBO headerPanelBO;
@@ -81,7 +80,6 @@ public class TestConcurrencyDrive {
             fail("Error at tearDown() ", e.getCause());
         } finally {
             DriverPool.closeDriver();
-//            WebDriverManager.closeQuietly();
         }
     }
 

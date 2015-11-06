@@ -1,15 +1,12 @@
 package task5;
 
+import utilities.drivers.SeleniumManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.net.URL;
+import utilities.BrowserType;
 
 public class AppiumTest {
 
@@ -18,24 +15,27 @@ public class AppiumTest {
 
     @Before
     public void setUp() throws Exception {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        /*DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.BROWSER_NAME, "Browser");
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName","Android Emulator");
         capabilities.setCapability("platformVersion", "4.4.2");
 
-        driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);*/
+        driver = SeleniumManager.start(BrowserType.Android_Chrome);
     }
 
     @After
     public void tearDown() throws Exception {
-        driver.quit();
+//        driver.quit();
+        SeleniumManager.closeQuietly();
     }
 
     @Test
     public void apiDemo(){
         driver.get(GOOGLE_HOME);
         Assert.assertTrue(driver.getCurrentUrl().contains("google"));
+        System.out.println("TEST IS PASSED");
     }
 
 }

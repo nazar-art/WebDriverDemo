@@ -1,4 +1,4 @@
-package framework.utilites;
+package utilities.files;
 
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
@@ -7,7 +7,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-public class XmlFileHandler extends BaseFileHandler {
+public class XmlFileHandler {
+
     private static Logger log = Logger.getLogger(XmlFileHandler.class);
 
     public String readXmlNode(InputSource source, String xpathNode) {

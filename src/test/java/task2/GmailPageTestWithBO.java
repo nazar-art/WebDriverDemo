@@ -1,6 +1,5 @@
 package task2;
 
-import business.GmailHeaderPanelBO;
 import business.GmailLeftPanelBO;
 import business.GmailMainContentBO;
 import business.LoginBO;
@@ -12,8 +11,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.GmailLoginPage;
-import pages.utils.TestUtils;
-import pages.utils.WebDriverManager;
+import utilities.TestUtils;
+import utilities.drivers.DriverManager;
 
 import java.util.List;
 
@@ -21,8 +20,7 @@ public class GmailPageTestWithBO {
 
     private static Logger log = Logger.getLogger(GmailPageTestWithBO.class);
 
-    private WebDriver driver = WebDriverManager.getInstance();
-    private GmailHeaderPanelBO headerPanelBO;
+    private WebDriver driver = DriverManager.getInstance();
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
     private GmailLeftPanelBO leftPanelBO;
@@ -32,47 +30,28 @@ public class GmailPageTestWithBO {
 
     @BeforeTest
     public void setUp() {
-        try {
-            driver.get(GmailLoginPage.LOGIN_URL);
-            driver.manage().window().maximize();
-            loginBO = new LoginBO();
-            loginBO.login(USER_LOGIN, USER_PASSWORD);
-        } catch (Exception e) {
-            log.error("setUp() for GmailPageTestWithBO fail, more details - ", e);
-            Assert.fail("setUp() for GmailPageTestWithBO fail, more details - ", e.getCause());
-        }
+        driver.get(GmailLoginPage.LOGIN_URL);
+        driver.manage().window().maximize();
+        loginBO = new LoginBO();
+        loginBO.login(USER_LOGIN, USER_PASSWORD);
     }
 
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
-        try {
-            mainContentBO = new GmailMainContentBO();
-            mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
+        mainContentBO = new GmailMainContentBO();
+        mainContentBO.saveAndCloseDraftMessage(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
 
-            leftPanelBO = new GmailLeftPanelBO();
-            leftPanelBO.clickDraftLink();
+        leftPanelBO = new GmailLeftPanelBO();
+        leftPanelBO.clickDraftLink();
 
-            List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
-            Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
-                    "any letter doesn't contain test message");
-        } catch (Exception e) {
-            log.error("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
-            Assert.fail("Exception occurred at GmailPageTestWithBO - testIfDraftFolderContainsSavedAndClosedDraft() - ", e);
-        }
+        List<WebElement> allMessages = mainContentBO.takeAllLettersFromPage();
+        Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
+                "any letter doesn't contain test message");
     }
 
     @AfterTest
     public void tearDown() {
-        try {
-            headerPanelBO = new GmailHeaderPanelBO();
-            headerPanelBO.clickProfileOptionMenu();
-            headerPanelBO.clickSignOutBtn();
-        } catch (Exception e) {
-            log.error("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e);
-            Assert.fail("Exception at tearDown() testIfDraftFolderContainsSavedAndClosedDraft - ", e.getCause());
-        } finally {
-            WebDriverManager.closeQuietly();
-        }
+        DriverManager.closeQuietly();
     }
 
     /**
@@ -84,14 +63,8 @@ public class GmailPageTestWithBO {
      */
     public boolean letterContainsTextMessage(List<WebElement> webElementList, String message) {
         for (WebElement element : webElementList) {
-            String fullLetterText = element.getText().trim();
-//            System.out.printf("full: %s%n", fullLetterText);
-            if (fullLetterText.startsWith("-")) {
-                String letterText = fullLetterText.substring(2);
-//                System.out.printf("short: %s%n", letterText);
-                if (letterText.equals(message)) {
-                    return true;
-                }
+            if (element.getText().contains(message)) {
+                return true;
             }
         }
         return false;

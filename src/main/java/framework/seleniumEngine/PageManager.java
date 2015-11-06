@@ -2,6 +2,7 @@ package framework.seleniumEngine;
 
 import framework.UIElements.BaseUIPage;
 import framework.UIElements.UIControlBuilder;
+import utilities.drivers.SeleniumManager;
 
 public class PageManager {
     private static SeleniumManager seleniumManager = SeleniumManager.getInstance();

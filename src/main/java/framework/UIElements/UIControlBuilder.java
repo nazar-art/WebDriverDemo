@@ -1,7 +1,7 @@
 package framework.UIElements;
 
 import framework.seleniumEngine.FindManager;
-import framework.seleniumEngine.SeleniumManager;
+import utilities.drivers.SeleniumManager;
 import framework.seleniumEngine.UIMapping;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;

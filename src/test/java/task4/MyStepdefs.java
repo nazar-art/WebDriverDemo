@@ -1,6 +1,5 @@
 package task4;
 
-import business.GmailHeaderPanelBO;
 import business.GmailLeftPanelBO;
 import business.GmailMainContentBO;
 import business.LoginBO;
@@ -14,20 +13,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.WebDriverManager;
+import utilities.drivers.DriverManager;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class MyStepdefs {
 
-    public WebDriver driver = WebDriverManager.getInstance();
+    public WebDriver driver = DriverManager.getInstance();
 
-    private GmailHeaderPanelBO headerPanelBO;
     private LoginBO loginBO;
     private GmailMainContentBO mainContentBO;
     private GmailLeftPanelBO leftPanelBO;
@@ -40,14 +38,7 @@ public class MyStepdefs {
 
     @After
     public void tearDown() {
-        headerPanelBO = new GmailHeaderPanelBO();
-
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.cssSelector(".gb_0")));
-        headerPanelBO.clickProfileOptionMenu();
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.cssSelector("#gb_71")));
-        headerPanelBO.clickSignOutBtn();
-
-        WebDriverManager.closeQuietly();
+        DriverManager.closeQuietly();
     }
 
     @Given("^Login to gmail page \"([^\"]*)\" with credentials login - \"([^\"]*)\" and password - \"([^\"]*)\"$")

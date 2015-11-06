@@ -9,23 +9,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.utils.TestUtils;
+import utilities.TestUtils;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static pages.utils.TestUtils.interrupt;
+import static utilities.TestUtils.interrupt;
 
 public class GmailPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='T-I J-J5-Ji T-I-KE L3']")
     private Button composeBtn;
 
-    @FindBy(css = "#gb_71")
+    @FindBy(xpath = "//div[@class='gb_ha']//a[contains(text(), 'Sign')]")
     private Link signOutLink;
 
 //    @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
@@ -47,11 +43,11 @@ public class GmailPage extends BasePage {
     @FindBy(xpath = "//*[@title='All Mail']")
     private Link allMailLink;
 
-    @FindBy(css = ".gb_0")
+    @FindBy(xpath = "//a[@class='gb_y gb_4 gb_e']/span[@class='gb_W gbii']")
     private Menu userOptionsDropDownMenu;
 
-    @FindAll({@FindBy(xpath = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]")})
-    private WebElement allMessagesPerPage;
+    @FindAll( {@FindBy(xpath = "//div[@id=':2'] //td[@tabindex='-1'] //span[2]")} )
+    private List<WebElement> allMessagesPerPage;
 
     public GmailPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
@@ -62,9 +58,7 @@ public class GmailPage extends BasePage {
     }
 
     public void clickSignOut() {
-        /*(new WebDriverWait(driver, 10)).until(ExpectedConditions.
-                elementToBeClickable(signOutLink));*/
-        interrupt(SECONDS, 1);
+        waitClickable("//div[@class='gb_ha']//a[contains(text(), 'Sign')]");
         signOutLink.click();
     }
 
@@ -73,55 +67,31 @@ public class GmailPage extends BasePage {
     }
 
     public void sendTextToMessageFrame(String msg) {
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
+        waitClickable("//div[@class = 'Am Al editable']/iframe");
         driver.switchTo().frame(frameMessageEditor);
         WebElement element = driver.switchTo().activeElement();
-        interrupt(SECONDS, 1);
         element.sendKeys(msg);
-        interrupt(SECONDS, 1);
         driver.switchTo().defaultContent();
         saveAndCloseFrameBtn.click();
     }
 
-    public void clickAllMailLink() {
-        interrupt(SECONDS, 1);
-        moreOptionsLink.click();
-
-        interrupt(SECONDS, 1);
-        allMailLink.click();
-    }
-
-    public void clickInboxLink() {
-        inboxMessagesLink.click();
-    }
-
     public void clickDraftLink() {
         draftMessagesLink.click();
+        interrupt(TimeUnit.SECONDS, 1);
     }
 
     public synchronized List<WebElement> takeAllMessages() {
-        List<WebElement> elements = null;
-        interrupt(SECONDS, 1);
-        elements = driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
-        return Collections.synchronizedList(elements);
-    }
-
-    public List<WebElement> takeInboxMessage() {
-        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<WebElement> takeDraftMessage() {
-        return (List<WebElement>) allMessagesPerPage;
+        return allMessagesPerPage;
     }
 
     public void clickComposeBtn() {
-        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
+//        new WebDriverWait(driver, 30).until(presenceOfElementLocated(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")));
+        waitPresence("//div[@class='T-I J-J5-Ji T-I-KE L3']");
         composeBtn.click();
     }
 
     public void typeTextToMessage(String msg) {
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(frameMessageEditor));
+        waitPresence("//div[@class = 'Am Al editable']/iframe");
         driver.switchTo().frame(frameMessageEditor);
         WebElement element = driver.switchTo().activeElement();
         element.sendKeys(msg);
@@ -130,6 +100,23 @@ public class GmailPage extends BasePage {
 
     public void clickSaveAndCloseBtn() {
         saveAndCloseFrameBtn.click();
+    }
+
+    public List<WebElement> takeInboxMessage() {
+        return driver.findElements(By.xpath(TestUtils.XPATH_ALL_LETTERS_FROM_PAGE));
+    }
+
+    public List<WebElement> takeDraftMessage() {
+        return allMessagesPerPage;
+    }
+
+    public void clickAllMailLink() {
+        moreOptionsLink.click();
+        allMailLink.click();
+    }
+
+    public void clickInboxLink() {
+        inboxMessagesLink.click();
     }
 
 }

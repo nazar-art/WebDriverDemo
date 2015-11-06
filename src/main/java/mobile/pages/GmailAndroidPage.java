@@ -13,53 +13,65 @@ import java.util.List;
 
 public class GmailAndroidPage extends AndroidBasePage {
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[starts-with(@class, 'M j T b hc Fn Pn Re')]")
     private Button composeBtn;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div/a[@id='gb_71']")
     private Link signOutLink;
 
-    @FindBy(xpath = "")
-    private WebElement frameMessageEditor;
+    @FindBy(xpath = "//div[@id='cmcbody']")
+    private WebElement newMessageEditor;
 
-    @FindBy(xpath = "")
-    private Button saveAndCloseBtn;
+    @FindBy(xpath = "//div[@class='M j T b hc Gs Ue']/div[@class='V j Y Gn Kh']")
+    private Button closeMsgBtn;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//div[@class='Jl ec']/span[contains(text(), 'Drafts')]")
     private Link draftMessagesLink;
 
-    @FindBy(xpath = "")
-    private Link moreOptionsLink;
+    @FindBy(xpath = "//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]")
+    private Link saveLetter;
 
-    @FindBy(xpath = "")
-    private Menu userOptionsDropDownMenu;
+    @FindBy(xpath = "//span[@class='gb_W gbii']")
+    private Menu userOptionsMenu;
 
-    @FindAll({@FindBy(xpath = "")})
-    private WebElement allMessagesPerPage;
+    @FindBy(xpath = "//div[starts-with(@class, 'V j Ld')]")
+    private Button optionsBtn;
+
+    @FindAll({ @FindBy(xpath = "//div//div[@class='Kh Cm']") })
+    private List<WebElement> allMessagesPerPage;
 
     public GmailAndroidPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
-
 
     public void clickComposeBtn() {
         composeBtn.click();
     }
 
     public void clickDraftLink() {
+        optionsBtn.click();
         draftMessagesLink.click();
+        waitPresence("//div//div[@class='Kh Cm']");
     }
 
     public void typeTextToMsg(String msg) {
-        // todo
+        newMessageEditor.sendKeys(msg);
     }
 
-    @SuppressWarnings("uncheckeed")
     public List<WebElement> takeAllMsgFromPage() {
-        return (List<WebElement>) allMessagesPerPage;
+        return allMessagesPerPage;
     }
 
-    public void clickSaveAndCloseBtn() {
-        saveAndCloseBtn.click();
+    public void clickCloseMessageBtn() {
+        closeMsgBtn.click();
+        waitPresence("//div[@class='M j T b hc zp q m']/div[contains(text(), 'Save')]");
+        saveLetter.click();
+    }
+
+    public void logOutUser() {
+        waitPresence("//span[@class='gb_W gbii']");
+        userOptionsMenu.click();
+        waitPresence("//div/a[@id='gb_71']");
+        signOutLink.click();
     }
 }
