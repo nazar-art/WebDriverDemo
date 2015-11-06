@@ -28,7 +28,8 @@ public class GmailPage extends BasePage {
     @FindBy(css = "#gb_71")
     private Link signOutLink;
 
-    @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
+//    @FindBy(xpath = "//div[@class = 'Am Al editable']/iframe")
+    @FindBy(xpath = "//div[@class = 'Am Al editable']")
     private WebElement frameMessageEditor;
 
     @FindBy(xpath = "//img[@aria-label='Save & Close']")

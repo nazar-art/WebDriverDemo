@@ -1,7 +1,6 @@
 package task1;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -32,8 +31,10 @@ public class GmailPageTestWithPageObject {
         try {
             driver.get(GmailLoginPage.LOGIN_URL);
             driver.manage().window().maximize();
+
             GmailLoginPage loginPage = new GmailLoginPage();
             page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
+
         } catch (Exception e) {
             log.error("GmailPageClassTest - setUp() fail", e);
             Assert.fail("GmailPageClassTest - setUp() fail", e.getCause());
@@ -43,16 +44,18 @@ public class GmailPageTestWithPageObject {
     @Test(groups = "GMAIL_PAGE")
     public void testIfDraftFolderContainsSavedAndClosedDraft() {
         try {
-            (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-                @Override
+            Thread.sleep(2000);
+            /*(new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+//                @Override
                 public Boolean apply(WebDriver d) {
-                    return d.findElement(By.xpath("//*[@id=':4e']/div/div")).isEnabled();
+                    return d.findElement(By.xpath("/*//*[@id=':4e']/div/div")).isEnabled();
                 }
-            });
+            });*/
             page.pressComposeButton();
             page.sendTextToMessageFrame(TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST);
             page.clickDraftLink();
             List<WebElement> allMessages = page.takeAllMessages();
+
             Assert.assertTrue(letterContainsTextMessage(allMessages, TestUtils.TEST_MESSAGE_FOR_GMAIL_PAGE_TEST),
                     "any letter doesn't contain test message");
         } catch (Exception e) {
@@ -61,14 +64,14 @@ public class GmailPageTestWithPageObject {
         }
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     public void tearDown() {
         try {
             page.clickProfileOptionMenu();
             page.clickSignOut();
 
             (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-                @Override
+
                 public Boolean apply(WebDriver d) {
                     return d.getTitle().toLowerCase().startsWith("gmail");
                 }

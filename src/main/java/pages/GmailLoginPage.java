@@ -27,17 +27,23 @@ public class GmailLoginPage extends BasePage {
     @FindBy(id = "signIn")
     private Button loginBtn;
 
+    @FindBy(id = "next")
+    private Button goToPassBtn;
+
+
+
     public GmailLoginPage() {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
     public GmailPage loginAs(String userName, String userPass) {
         loginField.typeText(userName);
+        goToPassBtn.click();
+
         passwordField.typeText(userPass);
         loginBtn.click();
 
         (new WebDriverWait(driver, 60)).until(new ExpectedCondition<Boolean>() {
-            @Override
             public Boolean apply(WebDriver d) {
                 return d.getTitle().toLowerCase().contains("gmail");
             }

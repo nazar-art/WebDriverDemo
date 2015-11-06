@@ -41,7 +41,6 @@ public class GmailAndroidPage extends AndroidBasePage {
         PageFactory.initElements(new ElementDecorator(driver), this);
     }
 
-//    todo finish page logic
 
     public void clickComposeBtn() {
         composeBtn.click();
