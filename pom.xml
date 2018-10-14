@@ -12,12 +12,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <selenium-version>2.48.2</selenium-version>
+        <selenium-version>3.3.1</selenium-version>
         <maven-surefire-version>2.19</maven-surefire-version>
         <maven-failsafe-version>2.19</maven-failsafe-version>
         <maven-jxr-version>2.3</maven-jxr-version>
         <thucydides.version>0.9.228</thucydides.version>
+        <java-version>1.10</java-version>
     </properties>
+
 
     <repositories>
         <repository>
@@ -148,7 +150,7 @@
         </dependency>
 
         <!--thucydides-->
-        <dependency>
+        <!--<dependency>
             <groupId>net.thucydides</groupId>
             <artifactId>thucydides-simple-archetype</artifactId>
             <version>0.4.19</version>
@@ -157,9 +159,24 @@
             <groupId>net.thucydides</groupId>
             <artifactId>thucydides-junit</artifactId>
             <version>${thucydides.version}</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
@@ -183,9 +200,9 @@
                         </dependencies>
 
                         <configuration>
-                            <suiteXmlFiles>
+                            <!--<suiteXmlFiles>
                                 <suiteXmlFile>src/main/resources/concurrent-suite.xml</suiteXmlFile>
-                            </suiteXmlFiles>
+                            </suiteXmlFiles>-->
                             <systemPropertyVariables>
                                 <selenium-version>${selenium-version}</selenium-version>
                                 <browser>browser-other</browser>
@@ -205,11 +222,11 @@
                         <version>3.3</version>
                     </plugin>
 
-                    <plugin>
+                    <!--<plugin>
                         <groupId>net.thucydides.maven.plugins</groupId>
                         <artifactId>maven-thucydides-plugin</artifactId>
                         <version>${thucydides.version}</version>
-                    </plugin>
+                    </plugin>-->
                 </plugins>
             </build>
 
@@ -314,8 +331,16 @@
 
                 </plugins>
             </reporting>
-
         </profile>
 
+        <profile>
+            <id>facebook</id>
+            <properties>
+                <suite.pattern>**/*FacebookDemoTest.java</suite.pattern>
+            </properties>
+
+        </profile>
     </profiles>
+
+    
 </project>

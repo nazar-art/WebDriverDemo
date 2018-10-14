@@ -1,6 +1,5 @@
 package task1;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -15,9 +14,6 @@ import utilities.drivers.DriverManager;
 import java.util.List;
 
 public class GmailPageTestWithPageObject {
-
-    private static Logger log = Logger.getLogger(GmailPageTestWithPageObject.class);
-
     private WebDriver driver = DriverManager.getInstance();
     private GmailPage page = null;
 
@@ -27,7 +23,6 @@ public class GmailPageTestWithPageObject {
     @BeforeTest
     public void setUp() {
         driver.get(GmailLoginPage.LOGIN_URL);
-        driver.manage().window().maximize();
         GmailLoginPage loginPage = new GmailLoginPage();
         page = loginPage.loginAs(USER_LOGIN, USER_PASSWORD);
     }

@@ -43,19 +43,22 @@ public class SeleniumManager {
             case Firefox: {
                 driver = new FirefoxDriver();
                 driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
                 return driver;
             }
 
             case Chrome: {
-                System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "/lib/chromedriver.exe");
                 driver = new ChromeDriver();
                 driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
                 return driver;
             }
 
             case IE: {
                 driver = new InternetExplorerDriver();
                 driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
                 return driver;
             }
 

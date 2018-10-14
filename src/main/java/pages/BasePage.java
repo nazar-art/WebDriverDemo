@@ -29,7 +29,7 @@ public abstract class BasePage implements IPage {
         driverWait = new WebDriverWait(driver, WAIT_TIME);
     }
 
-    @Override
+//    @Override
     public WebDriver getDriver() {
         return driver;
     }
@@ -49,7 +49,7 @@ public abstract class BasePage implements IPage {
                 .ignoring(NoSuchElementException.class);
 
         return wait.until(new Function<WebDriver, WebElement>() {
-            @Override
+//            @Override
             public WebElement apply(WebDriver driver) {
                 return driver.findElement(locator);
             }

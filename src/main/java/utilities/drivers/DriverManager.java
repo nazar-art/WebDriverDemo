@@ -1,6 +1,5 @@
 package utilities.drivers;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -13,23 +12,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static utilities.files.ProrpertiesFileHandler.readBrowserType;
+import static utilities.files.PropertiesFileHandler.readBrowserType;
 
 public class DriverManager {
-
-    private static Logger log = Logger.getLogger(DriverManager.class);
 
     private static volatile WebDriver driverInstance;
 
     private DriverManager() {
     }
 
-    public static synchronized WebDriver getInstance() {
+    public static /*synchronized*/ WebDriver getInstance() {
         if (driverInstance == null) {
             switch (readBrowserType()) {
                 case Firefox: {
                     driverInstance = new FirefoxDriver();
                     driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    driverInstance.manage().window().maximize();
                     return driverInstance;
                 }
 
@@ -37,12 +35,14 @@ public class DriverManager {
                     System.setProperty("webdriver.chrome.driver", "./lib/chromedriver.exe");
                     driverInstance = new ChromeDriver();
                     driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    driverInstance.manage().window().maximize();
                     return driverInstance;
                 }
 
                 case IE: {
                     driverInstance = new InternetExplorerDriver();
                     driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    driverInstance.manage().window().maximize();
                     return driverInstance;
                 }
 
@@ -58,7 +58,8 @@ public class DriverManager {
                         driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
                         return driverInstance;
                     } catch (MalformedURLException e) {
-                        log.error(e);
+                        e.printStackTrace();
+                        e.getCause();
                     }
                 }
 
