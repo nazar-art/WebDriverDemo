@@ -25,6 +25,8 @@ public class DriverManager {
         if (driverInstance == null) {
             switch (readBrowserType()) {
                 case Firefox: {
+                    System.setProperty("webdriver.gecko.driver","/home/nazar/Software/geckodriver");
+
                     driverInstance = new FirefoxDriver();
                     driverInstance.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
                     driverInstance.manage().window().maximize();

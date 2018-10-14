@@ -2,9 +2,7 @@ package utilities.drivers;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DriverPool {
@@ -15,14 +13,8 @@ public class DriverPool {
     private static AtomicInteger counter = new AtomicInteger(0);
     private static Logger log = Logger.getLogger(DriverPool.class);
 
-    private static volatile ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>() {
-        @Override
-        protected WebDriver initialValue() {
-            WebDriver driver = new FirefoxDriver();
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            return driver;
-        }
-    };
+    private static volatile ThreadLocal<WebDriver> instance = ThreadLocal
+            .withInitial(DriverManager::getInstance);
 
     public static synchronized WebDriver getDriver() {
         try {

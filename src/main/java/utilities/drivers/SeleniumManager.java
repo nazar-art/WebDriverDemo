@@ -41,6 +41,8 @@ public class SeleniumManager {
     public static WebDriver start(BrowserType browserType) {
         switch (browserType) {
             case Firefox: {
+                System.setProperty("webdriver.gecko.driver","/home/nazar/Software/geckodriver");
+
                 driver = new FirefoxDriver();
                 driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
